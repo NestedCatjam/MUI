@@ -62,7 +62,7 @@ const Register = () => {
             headers: {
                 'Content-type': 'application/json; charset=UTF-8',
             }
-        }).then(response => response.ok ? (() => {})() : alert(`Connection error: ${console.log(response)}`));
+        }).then(response => response.ok ? (() => {})() : alert(`Connection error`));
     }
   });
 
