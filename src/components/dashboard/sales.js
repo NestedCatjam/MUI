@@ -9,27 +9,55 @@ export const Sales = (props) => {
   const data = {
     datasets: [
       {
-        backgroundColor: '#3F51B5',
+        backgroundColor: '#FFF',
         barPercentage: 0.5,
-        barThickness: 12,
+        //barThickness is the width of the bar container, effectively used for padding
+        barThickness: 0,
         borderRadius: 4,
         categoryPercentage: 0.5,
-        data: [18, 5, 19, 27, 29, 19, 20],
-        label: 'This year',
-        maxBarThickness: 10
+        data: [100, 0, 0, 0],
+        label: '',
+        //maxBarThickness is the width of the visible bar
+        maxBarThickness: 20
       },
       {
-        backgroundColor: '#EEEEEE',
+        backgroundColor: '#AAA',
         barPercentage: 0.5,
-        barThickness: 12,
+        //barThickness is the width of the bar container, effectively used for padding
+        barThickness: 25,
         borderRadius: 4,
         categoryPercentage: 0.5,
-        data: [11, 20, 12, 29, 30, 25, 13],
-        label: 'Last year',
-        maxBarThickness: 10
+        data: [11, 5, 19, 97],
+        label: 'This month',
+        //maxBarThickness is the width of the visible bar
+        maxBarThickness: 20
+      },
+      {
+        backgroundColor: '#3F51B5',
+        barPercentage: 0.5,
+        barThickness: 25,
+        borderRadius: 4,
+        categoryPercentage: 0.5,
+        // data: [18, 20, 17, 29, 30, 25, 13],
+        data: [26, 5, 17, 99],
+        label: 'Last month',
+        maxBarThickness: 20
+      },
+      {
+        backgroundColor: '#FFF',
+        barPercentage: 0.5,
+        //barThickness is the width of the bar container, effectively used for padding
+        barThickness: 0,
+        borderRadius: 4,
+        categoryPercentage: 0.5,
+        data: [100, 0, 0, 0],
+        label: '',
+        //maxBarThickness is the width of the visible bar
+        maxBarThickness: 20
       }
     ],
-    labels: ['1 Aug', '2 Aug', '3 Aug', '4 Aug', '5 Aug', '6 Aug', '7 aug']
+    // labels: ['1 Aug', '2 Aug', '3 Aug', '4 Aug', '5 Aug', '6 Aug', '7 aug']
+    labels: ['NIST', 'SOC2', 'GDPR', 'HITRUST']
   };
 
   const options = {
@@ -54,7 +82,7 @@ export const Sales = (props) => {
       {
         ticks: {
           fontColor: theme.palette.text.secondary,
-          beginAtZero: true,
+          beginAtZero: false,
           min: 0
         },
         gridLines: {
@@ -84,15 +112,16 @@ export const Sales = (props) => {
   return (
     <Card {...props}>
       <CardHeader
-        action={(
-          <Button
-            endIcon={<ArrowDropDownIcon fontSize="small" />}
-            size="small"
-          >
-            Last 7 days
-          </Button>
-        )}
-        title="Latest Sales"
+        // action={(
+        //   <Button
+        //     endIcon={<ArrowDropDownIcon fontSize="small" />}
+        //     size="small"
+        //   >
+        //     Last 7 days
+        //   </Button>
+        // )}
+        //title="Latest Sales"
+        title="Compliance Ratings"
       />
       <Divider />
       <CardContent>

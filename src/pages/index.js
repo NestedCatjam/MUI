@@ -36,7 +36,7 @@ const Page = () => (
             xl={3}
             xs={12}
           >
-            <Budget />
+            <TotalProfit sx={{ height: '100%' }}  />
           </Grid>
           <Grid
             item
@@ -45,7 +45,7 @@ const Page = () => (
             sm={6}
             xs={12}
           >
-            <TotalCustomers />
+            <Budget />
           </Grid>
           <Grid
             item
@@ -63,7 +63,7 @@ const Page = () => (
             sm={6}
             xs={12}
           >
-            <TotalProfit sx={{ height: '100%' }} />
+            <TotalCustomers sx={{ height: '100%' }} />
           </Grid>
           <Grid
             item
