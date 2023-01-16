@@ -52,12 +52,13 @@ const Register = () => {
         )
     }),
     onSubmit: values => {
-      fetch(`/api/users`, {
+      fetch(`/api/v1/registration`, {
             method: 'POST', 
             body: JSON.stringify({
-                id: null,
-                name: values.firstName + " " + values.lastName,
-                email: values.email, posts: []
+              firstName: values.firstName, 
+              lastName: values.lastName, 
+              email: values.email, 
+              password: values.password
             }),
             headers: {
                 'Content-type': 'application/json; charset=UTF-8',
