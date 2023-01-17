@@ -9,7 +9,7 @@ import { AuthConsumer, AuthProvider } from '../contexts/auth-context';
 import { createEmotionCache } from '../utils/create-emotion-cache';
 import { registerChartJs } from '../utils/register-chart-js';
 import { theme } from '../theme';
-
+import { UserProvider } from '@auth0/nextjs-auth0/client';
 registerChartJs();
 
 const clientSideEmotionCache = createEmotionCache();
@@ -17,6 +17,7 @@ const clientSideEmotionCache = createEmotionCache();
 const App = (props) => {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
 
+  const { user } = pageProps;
   const getLayout = Component.getLayout ?? ((page) => page);
 
   return (
@@ -33,6 +34,7 @@ const App = (props) => {
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
+          <UserProvider user={user}>
           <AuthProvider>
             <AuthConsumer>
               {
@@ -42,6 +44,7 @@ const App = (props) => {
               }
             </AuthConsumer>
           </AuthProvider>
+          </UserProvider>
         </ThemeProvider>
       </LocalizationProvider>
     </CacheProvider>

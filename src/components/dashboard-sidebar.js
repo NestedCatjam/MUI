@@ -43,7 +43,7 @@ const items = [
     title: 'Settings'
   },
   {
-    href: '/login',
+    href: '/api/auth/login',
     icon: (<LockIcon fontSize="small" />),
     title: 'Login'
   },

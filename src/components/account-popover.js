@@ -4,11 +4,12 @@ import PropTypes from 'prop-types';
 import { Box, MenuItem, MenuList, Popover, Typography } from '@mui/material';
 import { AuthContext } from '../contexts/auth-context';
 import { auth, ENABLE_AUTH } from '../lib/auth';
+import { useUser } from '@auth0/nextjs-auth0/client';
 
 export const AccountPopover = (props) => {
   const { anchorEl, onClose, open, ...other } = props;
   const authContext = useContext(AuthContext);
-
+  const { user, isLoading, error } = useUser();
   const handleSignOut = async () => {
     onClose?.();
 
@@ -64,20 +65,20 @@ export const AccountPopover = (props) => {
       }}
       {...other}
     >
-      <Box
+      {isLoading ? <div>Loading...</div> : error ? <div>{error.message}</div> : <><Box
         sx={{
           py: 1.5,
           px: 2
         }}
       >
-        <Typography variant="overline">
+       <Typography variant="overline">
           Account
         </Typography>
         <Typography
           color="text.secondary"
           variant="body2"
         >
-          John Doe
+          {user.name}
         </Typography>
       </Box>
       <MenuList
@@ -93,10 +94,10 @@ export const AccountPopover = (props) => {
           }
         }}
       >
-        <MenuItem onClick={handleSignOut}>
+        <MenuItem  href='/api/auth/logout'>
           Sign out
         </MenuItem>
-      </MenuList>
+      </MenuList></>}
     </Popover>
   );
 };
