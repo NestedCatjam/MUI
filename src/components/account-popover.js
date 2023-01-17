@@ -5,6 +5,7 @@ import { Box, MenuItem, MenuList, Popover, Typography } from '@mui/material';
 import { AuthContext } from '../contexts/auth-context';
 import { auth, ENABLE_AUTH } from '../lib/auth';
 import { useUser } from '@auth0/nextjs-auth0/client';
+import NextLink from 'next/link';
 
 export const AccountPopover = (props) => {
   const { anchorEl, onClose, open, ...other } = props;
@@ -94,8 +95,8 @@ export const AccountPopover = (props) => {
           }
         }}
       >
-        <MenuItem  href='/api/auth/logout'>
-          Sign out
+        <MenuItem>
+          <NextLink href="/api/auth/logout">Sign out</NextLink>
         </MenuItem>
       </MenuList></>}
     </Popover>
