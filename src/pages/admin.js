@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 const Page = () => {
   const [rows, setRows] = useState([]);
   useEffect(() => {
+    
     fetch(`/api/users`, { method: 'GET' }).then(raw => raw.json()).then(rows => {
         console.log(rows)
         setRows(rows);
