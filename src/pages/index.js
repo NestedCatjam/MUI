@@ -63,7 +63,7 @@ const Page = () => (
             sm={6}
             xs={12}
           >
-            <TotalCustomers sx={{ height: '100%' }} />
+            <TotalCustomers sx={{ height: '100%', visibility:'hidden' }} />
           </Grid>
           <Grid
             item

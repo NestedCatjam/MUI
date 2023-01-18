@@ -10,14 +10,14 @@ export const TrafficByDevice = (props) => {
   const data = {
     datasets: [
       {
-        data: [63, 15, 22],
+        data: [26, 61, 13],
         backgroundColor: ['#3F51B5', '#e53935', '#FB8C00'],
         borderWidth: 8,
         borderColor: '#FFFFFF',
         hoverBorderColor: '#FFFFFF'
       }
     ],
-    labels: ['Desktop', 'Tablet', 'Mobile']
+    labels: ['Confirmed Compliant', 'Non-compliant', 'Under Review']
   };
 
   const options = {
@@ -44,20 +44,20 @@ export const TrafficByDevice = (props) => {
 
   const devices = [
     {
-      title: 'Desktop',
-      value: 63,
+      title: 'Confirmed Compliant',
+      value: 26,
       icon: LaptopMacIcon,
       color: '#3F51B5'
     },
     {
-      title: 'Tablet',
-      value: 15,
+      title: 'Non-compliant',
+      value: 61,
       icon: TabletIcon,
       color: '#E53935'
     },
     {
-      title: 'Mobile',
-      value: 23,
+      title: 'Under Review',
+      value: 13,
       icon: PhoneIcon,
       color: '#FB8C00'
     }
@@ -65,7 +65,7 @@ export const TrafficByDevice = (props) => {
 
   return (
     <Card {...props}>
-      <CardHeader title="Traffic by Device" />
+      <CardHeader title="Compliance Statistics (NIST)" />
       <Divider />
       <CardContent>
         <Box
