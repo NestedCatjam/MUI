@@ -32,7 +32,7 @@ const Page = () => {
         <Container maxWidth={false}>
           <CustomerListToolbar />
           <Box sx={{ mt: 3 }}>
-            {<CustomerListResults customers={rows} />}
+            {<CustomerListResults customers={rows.map(x => ({...x, id: x.user_id, }))} />}
           </Box>
         </Container>
       </Box>

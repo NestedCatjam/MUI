@@ -113,17 +113,17 @@ export const CustomerListResults = ({ customers, ...rest }) => {
                         display: 'flex'
                       }}
                     >
-                      {/* <Avatar
-                        src={customer.avatarUrl}
+                       <Avatar
+                        src={customer.picture}
                         sx={{ mr: 2 }}
                       >
                         {getInitials(customer.name)}
-                      </Avatar> */}
+                      </Avatar>
                       <Typography
                         color="textPrimary"
                         variant="body1"
                       >
-                        {customer.name}
+                        {customer.nickname}
                       </Typography>
                     </Box>
                   </TableCell>
