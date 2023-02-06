@@ -27,17 +27,8 @@ const states = [
 ];
 
 export const AccountProfileDetails = (props) => {
-  const {user} = useUser();
-  const [values, setValues] = useState({
-    firstName: 'Katarina',
-    lastName: 'Smith',
-    nickname: user.nickname,
-    name: user.name,
-    email: user.email,
-    phone: '',
-    state: 'Alabama',
-    country: 'USA'
-  });
+  const { user, ...rest } = useUser();
+  const [values, setValues] = useState(user);
 
   const handleChange = (event) => {
     setValues({
@@ -72,7 +63,7 @@ export const AccountProfileDetails = (props) => {
                 fullWidth
                 helperText="Please specify the nickname"
                 label="Nickname"
-                name="firstName"
+                name="nickname"
                 onChange={handleChange}
                 required
                 value={values.nickname}
@@ -87,7 +78,7 @@ export const AccountProfileDetails = (props) => {
               <TextField
                 fullWidth
                 label="Name"
-                name="lastName"
+                name="name"
                 onChange={handleChange}
                 required
                 value={values.name}
@@ -178,6 +169,13 @@ export const AccountProfileDetails = (props) => {
           <Button
             color="primary"
             variant="contained"
+            onClick={_ => {
+              fetch(`/api/users/${user.sid}`, {
+                method: 'PUT', body: JSON.stringify(values), headers: {
+                  'Content-type': 'application/json; charset=UTF-8',
+                }
+              }).then(response => response.ok ? response : alert("Connection error"))
+            }}
           >
             Save details
           </Button>
