@@ -170,8 +170,8 @@ export const AccountProfileDetails = (props) => {
             color="primary"
             variant="contained"
             onClick={_ => {
-              fetch(`/api/users/${user.sid}`, {
-                method: 'PUT', body: JSON.stringify(values), headers: {
+              fetch(`/api/users/${user.sub}`, {
+                method: 'PUT', body: JSON.stringify({nickname: values.nickname, name: values.name}), headers: {
                   'Content-type': 'application/json; charset=UTF-8',
                 }
               }).then(response => response.ok ? response : alert("Connection error"))
