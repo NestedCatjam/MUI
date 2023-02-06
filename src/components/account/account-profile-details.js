@@ -9,6 +9,7 @@ import {
   Grid,
   TextField
 } from '@mui/material';
+import { useUser } from '@auth0/nextjs-auth0/client';
 
 const states = [
   {
@@ -26,10 +27,13 @@ const states = [
 ];
 
 export const AccountProfileDetails = (props) => {
+  const {user} = useUser();
   const [values, setValues] = useState({
     firstName: 'Katarina',
     lastName: 'Smith',
-    email: 'demo@devias.io',
+    nickname: user.nickname,
+    name: user.name,
+    email: user.email,
     phone: '',
     state: 'Alabama',
     country: 'USA'
@@ -66,12 +70,12 @@ export const AccountProfileDetails = (props) => {
             >
               <TextField
                 fullWidth
-                helperText="Please specify the first name"
-                label="First name"
+                helperText="Please specify the nickname"
+                label="Nickname"
                 name="firstName"
                 onChange={handleChange}
                 required
-                value={values.firstName}
+                value={values.nickname}
                 variant="outlined"
               />
             </Grid>
@@ -82,11 +86,11 @@ export const AccountProfileDetails = (props) => {
             >
               <TextField
                 fullWidth
-                label="Last name"
+                label="Name"
                 name="lastName"
                 onChange={handleChange}
                 required
-                value={values.lastName}
+                value={values.name}
                 variant="outlined"
               />
             </Grid>

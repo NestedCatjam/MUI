@@ -30,6 +30,7 @@ export const CustomerListToolbar = (props) => (
         Administrator
       </Typography>
       <Box sx={{ m: 1 }}>
+        <Button sx={{ mr: 1 }}>Delete</Button>
         <Button
           startIcon={(<UploadIcon fontSize="small" />)}
           sx={{ mr: 1 }}
