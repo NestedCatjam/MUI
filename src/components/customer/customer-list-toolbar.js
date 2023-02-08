@@ -10,6 +10,7 @@ import {
 import { Search as SearchIcon } from '../../icons/search';
 import { Upload as UploadIcon } from '../../icons/upload';
 import { Download as DownloadIcon } from '../../icons/download';
+import NextLink from 'next/link';
 
 export const CustomerListToolbar = (props) => (
   <Box {...props}>
@@ -26,9 +27,10 @@ export const CustomerListToolbar = (props) => (
         sx={{ m: 1 }}
         variant="h4"
       >
-        Customers
+        Administrator
       </Typography>
       <Box sx={{ m: 1 }}>
+        <Button sx={{ mr: 1 }}>Delete</Button>
         <Button
           startIcon={(<UploadIcon fontSize="small" />)}
           sx={{ mr: 1 }}
@@ -41,12 +43,14 @@ export const CustomerListToolbar = (props) => (
         >
           Export
         </Button>
+        <NextLink href="/register" passHref>
         <Button
           color="primary"
           variant="contained"
         >
-          Add Customers
+          Add user
         </Button>
+        </NextLink>
       </Box>
     </Box>
     <Box sx={{ mt: 3 }}>
@@ -67,7 +71,7 @@ export const CustomerListToolbar = (props) => (
                   </InputAdornment>
                 )
               }}
-              placeholder="Search customer"
+              placeholder="Search user accounts"
               variant="outlined"
             />
           </Box>

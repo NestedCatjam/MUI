@@ -8,6 +8,7 @@ import { Bell as BellIcon } from '../icons/bell';
 import { UserCircle as UserCircleIcon } from '../icons/user-circle';
 import { Users as UsersIcon } from '../icons/users';
 import { AccountPopover } from './account-popover';
+import { useUser } from '@auth0/nextjs-auth0/client';
 
 const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
@@ -18,7 +19,7 @@ export const DashboardNavbar = (props) => {
   const { onSidebarOpen, ...other } = props;
   const settingsRef = useRef(null);
   const [openAccountPopover, setOpenAccountPopover] = useState(false);
-
+  const {user} = useUser();
   return (
     <>
       <DashboardNavbarRoot
@@ -81,7 +82,7 @@ export const DashboardNavbar = (props) => {
               width: 40,
               ml: 1
             }}
-            src="/static/images/avatars/avatar_1.png"
+            src={user.picture}
           >
             <UserCircleIcon fontSize="small" />
           </Avatar>

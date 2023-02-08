@@ -16,6 +16,7 @@ import {
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const Register = () => {
+  
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -50,10 +51,19 @@ const Register = () => {
           'This field must be checked'
         )
     }),
-    onSubmit: () => {
-      Router
-        .push('/')
-        .catch(console.error);
+    onSubmit: values => {
+      fetch(`/api/v1/registration`, {
+            method: 'POST', 
+            body: JSON.stringify({
+              firstName: values.firstName, 
+              lastName: values.lastName, 
+              email: values.email, 
+              password: values.password
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            }
+        }).then(response => response.ok ? (() => {})() : alert(`Connection error`));
     }
   });
 
@@ -61,7 +71,7 @@ const Register = () => {
     <>
       <Head>
         <title>
-          Register | Material Kit
+          Register | Controlcognizant
         </title>
       </Head>
       <Box

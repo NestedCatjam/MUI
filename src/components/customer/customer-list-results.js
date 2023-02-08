@@ -87,14 +87,9 @@ export const CustomerListResults = ({ customers, ...rest }) => {
                   Email
                 </TableCell>
                 <TableCell>
-                  Location
+                  Role
                 </TableCell>
-                <TableCell>
-                  Phone
-                </TableCell>
-                <TableCell>
-                  Registration date
-                </TableCell>
+                
               </TableRow>
             </TableHead>
             <TableBody>
@@ -118,8 +113,8 @@ export const CustomerListResults = ({ customers, ...rest }) => {
                         display: 'flex'
                       }}
                     >
-                      <Avatar
-                        src={customer.avatarUrl}
+                       <Avatar
+                        src={customer.picture}
                         sx={{ mr: 2 }}
                       >
                         {getInitials(customer.name)}
@@ -128,22 +123,14 @@ export const CustomerListResults = ({ customers, ...rest }) => {
                         color="textPrimary"
                         variant="body1"
                       >
-                        {customer.name}
+                        {customer.nickname}
                       </Typography>
                     </Box>
                   </TableCell>
                   <TableCell>
                     {customer.email}
                   </TableCell>
-                  <TableCell>
-                    {`${customer.address.city}, ${customer.address.state}, ${customer.address.country}`}
-                  </TableCell>
-                  <TableCell>
-                    {customer.phone}
-                  </TableCell>
-                  <TableCell>
-                    {format(customer.createdAt, 'dd/MM/yyyy')}
-                  </TableCell>
+                  
                 </TableRow>
               ))}
             </TableBody>
