@@ -21,10 +21,7 @@ const App = (props) => {
 
   const getLayout = Component.getLayout ?? ((page) => page);
 
-  const {isLoading} = useAuth0();
-
   return (
-      // <Auth0ProviderWithHistory>
       <CacheProvider value={emotionCache}>
         <Head>
           <title>
@@ -50,7 +47,6 @@ const App = (props) => {
           </ThemeProvider>
         </LocalizationProvider>
       </CacheProvider>
-    // </Auth0ProviderWithHistory>
   );
 }
 export default App;

@@ -17,7 +17,7 @@ export const TrafficByDevice = (props) => {
         hoverBorderColor: '#FFFFFF'
       }
     ],
-    labels: ['Confirmed Compliant', 'Non-compliant', 'Under Review']
+    labels: ['Compliant', 'Non-compliant', 'Under Review']
   };
 
   const options = {
@@ -44,7 +44,7 @@ export const TrafficByDevice = (props) => {
 
   const devices = [
     {
-      title: 'Confirmed Compliant',
+      title: 'Compliant',
       value: 26,
       icon: LaptopMacIcon,
       color: '#3F51B5'

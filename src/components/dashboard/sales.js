@@ -27,7 +27,7 @@ export const Sales = (props) => {
         barThickness: 25,
         borderRadius: 4,
         categoryPercentage: 0.5,
-        data: [11, 5, 19, 97],
+        data: [26, 5, 17, 99],
         label: 'This month',
         //maxBarThickness is the width of the visible bar
         maxBarThickness: 20
@@ -39,7 +39,7 @@ export const Sales = (props) => {
         borderRadius: 4,
         categoryPercentage: 0.5,
         // data: [18, 20, 17, 29, 30, 25, 13],
-        data: [26, 5, 17, 99],
+        data: [46, 25, 47, 99],
         label: 'Last month',
         maxBarThickness: 20
       },
@@ -56,7 +56,6 @@ export const Sales = (props) => {
         maxBarThickness: 20
       }
     ],
-    // labels: ['1 Aug', '2 Aug', '3 Aug', '4 Aug', '5 Aug', '6 Aug', '7 aug']
     labels: ['NIST', 'SOC2', 'GDPR', 'HITRUST']
   };
 
