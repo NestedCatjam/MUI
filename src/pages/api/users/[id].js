@@ -12,6 +12,6 @@ export default withApiAuthRequired(async function users(req, res) {
       'Content-type': 'application/json; charset=UTF-8',
     }
   });
-
-  res.status(response.status);
+  
+  res.status(response.status);//.json(response.json());
 })

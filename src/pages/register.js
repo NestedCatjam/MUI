@@ -52,18 +52,19 @@ const Register = () => {
         )
     }),
     onSubmit: values => {
-      fetch(`/api/v1/registration`, {
+      fetch(`/api/users`, {
             method: 'POST', 
             body: JSON.stringify({
-              firstName: values.firstName, 
-              lastName: values.lastName, 
+              given_name: values.firstName, 
+              family_name: values.lastName, 
               email: values.email, 
-              password: values.password
+              password: values.password,
+              connection: 'Username-Password-Authentication'
             }),
             headers: {
                 'Content-type': 'application/json; charset=UTF-8',
             }
-        }).then(response => response.ok ? (() => {})() : alert(`Connection error`));
+        }).then(response => {console.log(response); response.ok ? (() => {})() : alert(`Connection error`);});
     }
   });
 
