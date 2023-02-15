@@ -14,10 +14,11 @@ const Page = () => {
     console.log('Deleting selected users');
     console.log(rows);
     console.log(selectedCustomerIds);
-    for (const user of rows.filter(row => {console.log(row); return selectedCustomerIds.indexOf(row.user_id) >= 0;}) ) {
+    for (const user of rows.filter(row => selectedCustomerIds.indexOf(row.user_id) >= 0) ) {
       const result = await fetch(`/api/users/${encodeURIComponent(user.user_id)}`, {method: 'DELETE'});
+      console.log(JSON.stringify(result));
       if (result.ok) {
-
+        
       } else {
         alert('Delete failed');
       }
