@@ -23,9 +23,9 @@ const items = [
     title: 'Dashboard'
   },
   {
-    href: '/customers',
+    href: '/admin',
     icon: (<UsersIcon fontSize="small" />),
-    title: 'Customers'
+    title: 'Administrator'
   },
   {
     href: '/products',
@@ -43,7 +43,7 @@ const items = [
     title: 'Settings'
   },
   {
-    href: '/login',
+    href: '/api/auth/login',
     icon: (<LockIcon fontSize="small" />),
     title: 'Login'
   },

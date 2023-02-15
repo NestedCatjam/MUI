@@ -9,6 +9,7 @@ import {
   Grid,
   TextField
 } from '@mui/material';
+import { useUser } from '@auth0/nextjs-auth0/client';
 
 const states = [
   {
@@ -26,14 +27,8 @@ const states = [
 ];
 
 export const AccountProfileDetails = (props) => {
-  const [values, setValues] = useState({
-    firstName: 'Katarina',
-    lastName: 'Smith',
-    email: 'demo@devias.io',
-    phone: '',
-    state: 'Alabama',
-    country: 'USA'
-  });
+  const { user, ...rest } = useUser();
+  const [values, setValues] = useState(user);
 
   const handleChange = (event) => {
     setValues({
@@ -66,12 +61,12 @@ export const AccountProfileDetails = (props) => {
             >
               <TextField
                 fullWidth
-                helperText="Please specify the first name"
-                label="First name"
-                name="firstName"
+                helperText="Please specify the nickname"
+                label="Nickname"
+                name="nickname"
                 onChange={handleChange}
                 required
-                value={values.firstName}
+                value={values.nickname}
                 variant="outlined"
               />
             </Grid>
@@ -82,11 +77,11 @@ export const AccountProfileDetails = (props) => {
             >
               <TextField
                 fullWidth
-                label="Last name"
-                name="lastName"
+                label="Name"
+                name="name"
                 onChange={handleChange}
                 required
-                value={values.lastName}
+                value={values.name}
                 variant="outlined"
               />
             </Grid>
@@ -174,6 +169,13 @@ export const AccountProfileDetails = (props) => {
           <Button
             color="primary"
             variant="contained"
+            onClick={_ => {
+              fetch(`/api/users/${user.sub}`, {
+                method: 'PUT', body: JSON.stringify({nickname: values.nickname, name: values.name}), headers: {
+                  'Content-type': 'application/json; charset=UTF-8',
+                }
+              }).then(response => response.ok ? response : alert("Connection error"))
+            }}
           >
             Save details
           </Button>

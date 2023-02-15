@@ -1,3 +1,4 @@
+import { useUser } from '@auth0/nextjs-auth0/client';
 import {
   Avatar,
   Box,
@@ -18,8 +19,10 @@ const user = {
   timezone: 'GTM-7'
 };
 
-export const AccountProfile = (props) => (
-  <Card {...props}>
+export const AccountProfile = (props) => {
+
+  const { user } = useUser();
+  return <Card {...props}>
     <CardContent>
       <Box
         sx={{
@@ -29,7 +32,7 @@ export const AccountProfile = (props) => (
         }}
       >
         <Avatar
-          src={user.avatar}
+          src={user.picture}
           sx={{
             height: 64,
             mb: 2,
@@ -41,13 +44,13 @@ export const AccountProfile = (props) => (
           gutterBottom
           variant="h5"
         >
-          {user.name}
+          {user.nickname}
         </Typography>
         <Typography
           color="textSecondary"
           variant="body2"
         >
-          {`${user.city} ${user.country}`}
+          {user.email}
         </Typography>
         <Typography
           color="textSecondary"
@@ -67,5 +70,5 @@ export const AccountProfile = (props) => (
         Upload picture
       </Button>
     </CardActions>
-  </Card>
-);
+  </Card>;
+};

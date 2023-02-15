@@ -9,9 +9,7 @@ import { AuthConsumer, AuthProvider } from '../contexts/auth-context';
 import { createEmotionCache } from '../utils/create-emotion-cache';
 import { registerChartJs } from '../utils/register-chart-js';
 import { theme } from '../theme';
-import { useAuth0 } from "@auth0/auth0-react";
-import Auth0ProviderWithHistory from '../contexts/auth0Provider';
-
+import { UserProvider } from '@auth0/nextjs-auth0/client';
 registerChartJs();
 
 const clientSideEmotionCache = createEmotionCache();
@@ -19,34 +17,38 @@ const clientSideEmotionCache = createEmotionCache();
 const App = (props) => {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
 
+  const { user } = pageProps;
   const getLayout = Component.getLayout ?? ((page) => page);
 
   return (
-      <CacheProvider value={emotionCache}>
-        <Head>
-          <title>
-            Material Kit Pro
-          </title>
-          <meta
-            name="viewport"
-            content="initial-scale=1, width=device-width"
-            />
-        </Head>
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <AuthProvider>
-              <AuthConsumer>
+    <CacheProvider value={emotionCache}>
+      <Head>
+        <title>
+          Material Kit Pro
+        </title>
+        <meta
+          name="viewport"
+          content="initial-scale=1, width=device-width"
+        />
+      </Head>
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <UserProvider user={user}>
+          <AuthProvider>
+            <AuthConsumer>
               {
                 (auth) => auth.isLoading
-                ? <Fragment />
-                : getLayout(<Component {...pageProps} />)
+                  ? <Fragment />
+                  : getLayout(<Component {...pageProps} />)
               }
-              </AuthConsumer>
-            </AuthProvider>
-          </ThemeProvider>
-        </LocalizationProvider>
-      </CacheProvider>
+            </AuthConsumer>
+          </AuthProvider>
+          </UserProvider>
+        </ThemeProvider>
+      </LocalizationProvider>
+    </CacheProvider>
   );
-}
+};
+
 export default App;
