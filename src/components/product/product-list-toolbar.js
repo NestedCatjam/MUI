@@ -1,13 +1,16 @@
 import {
   Box,
   Button,
+  ButtonGroup,
   Card,
   CardContent,
   TextField,
   InputAdornment,
   SvgIcon,
-  Typography
+  Typography,
+  Autocomplete
 } from '@mui/material';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { Download as DownloadIcon } from '../../icons/download';
 import { Search as SearchIcon } from '../../icons/search';
 import { Upload as UploadIcon } from '../../icons/upload';
@@ -55,6 +58,7 @@ export const ProductListToolbar = (props) => (
         <CardContent>
           <Box sx={{ maxWidth: 500 }}>
             <TextField
+            //onchange = update the search results
               fullWidth
               InputProps={{
                 startAdornment: (
@@ -68,9 +72,26 @@ export const ProductListToolbar = (props) => (
                   </InputAdornment>
                 )
               }}
-              placeholder="Search product"
+              placeholder="Search by Category/Control"
               variant="outlined"
             />
+
+            <Button
+                      size="small"
+                      aria-controls={open ? 'split-button-menu' : undefined}
+                      aria-expanded={open ? 'true' : undefined}
+                      aria-label="select merge strategy"
+                      aria-haspopup="menu"
+                      // onClick={handleToggle}
+                    >
+                      <TextField 
+                      // disabled
+                      placeholder="Category"
+                      />
+                <ArrowDropDownIcon />
+                      
+            </Button>
+
           </Box>
         </CardContent>
       </Card>
