@@ -10,6 +10,7 @@ import { createEmotionCache } from '../utils/create-emotion-cache';
 import { registerChartJs } from '../utils/register-chart-js';
 import { theme } from '../theme';
 import { UserProvider } from '@auth0/nextjs-auth0/client';
+
 registerChartJs();
 
 const clientSideEmotionCache = createEmotionCache();

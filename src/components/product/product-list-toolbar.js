@@ -1,100 +1,132 @@
 import {
   Box,
   Button,
-  ButtonGroup,
   Card,
   CardContent,
-  TextField,
-  InputAdornment,
-  SvgIcon,
   Typography,
-  Autocomplete
+  Container,
+  Select,
+  InputLabel,
+  FormControl,
+  MenuItem
 } from '@mui/material';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { Download as DownloadIcon } from '../../icons/download';
-import { Search as SearchIcon } from '../../icons/search';
 import { Upload as UploadIcon } from '../../icons/upload';
+import { evidence } from '../../__mocks__/evidence';
+import React, { useState } from 'react';
 
-export const ProductListToolbar = (props) => (
-  <Box {...props}>
-    <Box
-      sx={{
-        alignItems: 'center',
-        display: 'flex',
-        justifyContent: 'space-between',
-        flexWrap: 'wrap',
-        m: -1
-      }}
-    >
-      <Typography
-        sx={{ m: 1 }}
-        variant="h4"
+
+// export const ProductListToolbar = (props) => (
+export default function ProductListToolbar(props) {
+
+  const [category, setCategory] = useState('');
+  const [controls, setControls] = useState('');
+  const [control, setControl] = useState('');
+
+  const findEvidence = (title) => {
+    console.log("findEvidence title:", title);
+    console.log({evidence});
+    const result = evidence.filter(row =>  row.control == title);
+    console.log("resulting evidence:", result, result[0].evidence);
+    props.setEvidence(result[0].evidence);
+  }
+
+  const handleCategoryChange = (e) => {
+    setControls('');
+    setControl('');
+    props.setEvidence(null);
+    setCategory(e.target.value)
+    props.controls.forEach(listing => {
+      if(listing.category === e.target.value) {
+        setControls(listing.controlRequirement);
+      }
+    });
+  }
+
+  const handleControlChange = (e) => {
+    setControl(e.target.value);
+    props.setCurrentControl(e.target.value);
+    console.log("setcurrentcontrol worked, or at least didn't break the program:", e.target.value);
+    findEvidence(e.target.value);
+  }
+
+  return (
+    <Box {...props}>
+
+      <Box
+        sx={{
+          alignItems: 'center',
+          display: 'flex',
+          justifyContent: 'space-between',
+          flexWrap: 'wrap',
+          m: -1
+        }}
       >
-        Products
-      </Typography>
-      <Box sx={{ m: 1 }}>
-        <Button
-          startIcon={(<UploadIcon fontSize="small" />)}
-          sx={{ mr: 1 }}
+        <Typography
+          sx={{ m: 1 }}
+          variant="h4"
         >
-          Import
-        </Button>
-        <Button
-          startIcon={(<DownloadIcon fontSize="small" />)}
-          sx={{ mr: 1 }}
-        >
-          Export
-        </Button>
-        <Button
-          color="primary"
-          variant="contained"
-        >
-          Add products
-        </Button>
+          Products
+        </Typography>
+        <Box sx={{ m: 1 }}>
+          <Button
+            startIcon={(<UploadIcon fontSize="small" />)}
+            sx={{ mr: 1 }}
+          >
+            Import
+          </Button>
+          <Button
+            startIcon={(<DownloadIcon fontSize="small" />)}
+            sx={{ mr: 1 }}
+          >
+            Export
+          </Button>
+          <Button
+            color="primary"
+            variant="contained"
+          >
+            Add products
+          </Button>
+        </Box>
+      </Box>
+      <Box sx={{ mt: 3 }}>
+        <Card>
+          <CardContent>
+            <Container>
+              <FormControl sx={{ minWidth: 180, pb: 3, pr: 2 }}>
+                <InputLabel id="categoryLabel">Category</InputLabel>
+                <Select
+                  labelId="Category"
+                  id="categories"
+                  label="Category"
+                  value={category}
+                  onChange={handleCategoryChange}
+                >
+                  {props.controls.map(listing => (
+                    <MenuItem value={listing.category} key={listing.key}>{listing.category}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+
+              {!category ||
+                <FormControl sx={{ minWidth: 180 }}>
+                  <InputLabel id="controlLabel">Controls</InputLabel>
+                  <Select
+                    labelId="Control"
+                    id="controls"
+                    label="Control"
+                    value={control}
+                    onChange={handleControlChange}
+                  >
+                    {controls.map(control => (
+                      <MenuItem value={control} key={control}>{control}</MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>}
+            </Container>
+          </CardContent>
+        </Card>
       </Box>
     </Box>
-    <Box sx={{ mt: 3 }}>
-      <Card>
-        <CardContent>
-          <Box sx={{ maxWidth: 500 }}>
-            <TextField
-            //onchange = update the search results
-              fullWidth
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SvgIcon
-                      fontSize="small"
-                      color="action"
-                    >
-                      <SearchIcon />
-                    </SvgIcon>
-                  </InputAdornment>
-                )
-              }}
-              placeholder="Search by Category/Control"
-              variant="outlined"
-            />
-
-            <Button
-                      size="small"
-                      aria-controls={open ? 'split-button-menu' : undefined}
-                      aria-expanded={open ? 'true' : undefined}
-                      aria-label="select merge strategy"
-                      aria-haspopup="menu"
-                      // onClick={handleToggle}
-                    >
-                      <TextField 
-                      // disabled
-                      placeholder="Category"
-                      />
-                <ArrowDropDownIcon />
-                      
-            </Button>
-
-          </Box>
-        </CardContent>
-      </Card>
-    </Box>
-  </Box>
-);
+  );
+};
