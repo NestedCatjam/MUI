@@ -28,9 +28,9 @@ const items = [
     title: 'Administrator'
   },
   {
-    href: '/products',
+    href: '/evidence',
     icon: (<ShoppingBagIcon fontSize="small" />),
-    title: 'Products'
+    title: 'Evidence'
   },
   {
     href: '/account',

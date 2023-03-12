@@ -1,4 +1,4 @@
-let evidence = [
+export let safety = [
   {
     key: "0701.07a1Organizational.12",
     control:"0701.07a1Organizational.12\nAn inventory of assets and services is maintained.",
@@ -125,11 +125,3 @@ let evidence = [
     evidence: []
   }
 ];
-
-export const getEvidence = () => {
-  return evidence;
-}
-
-export const updateEvidence = (input) => {
-  evidence = input;
-}

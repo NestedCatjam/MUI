@@ -12,16 +12,23 @@ import {
 } from '@mui/material';
 import { Download as DownloadIcon } from '../../icons/download';
 import { Upload as UploadIcon } from '../../icons/upload';
-import { evidence } from '../../__mocks__/evidence';
+import { getEvidence, updateEvidence } from '../../__mocks__/evidence';
 import React, { useState } from 'react';
+import AttachmentIcon from '@mui/icons-material/Attachment';
 
 
-// export const ProductListToolbar = (props) => (
 export default function ProductListToolbar(props) {
 
   const [category, setCategory] = useState('');
   const [controls, setControls] = useState('');
   const [control, setControl] = useState('');
+
+  const [uploadFile, setUploadFile] = useState(null);
+  const [createObjectURL, setCreateObjectURL] = useState(null);
+
+  // const [allEvidence, setAllEvidence] = useState(evidence);
+
+  let evidence = getEvidence();
 
   const findEvidence = (title) => {
     console.log("findEvidence title:", title);
@@ -34,6 +41,7 @@ export default function ProductListToolbar(props) {
   const handleCategoryChange = (e) => {
     setControls('');
     setControl('');
+    props.setFile('');
     props.setEvidence(null);
     setCategory(e.target.value)
     props.controls.forEach(listing => {
@@ -48,6 +56,38 @@ export default function ProductListToolbar(props) {
     props.setCurrentControl(e.target.value);
     console.log("setcurrentcontrol worked, or at least didn't break the program:", e.target.value);
     findEvidence(e.target.value);
+  }
+
+  const handleImport = (e) => {
+    if(e.target.files && e.target.files[0]){
+      const i = e.target.files[0]
+
+      console.log("uploadFile:", i);
+      setUploadFile(i);
+      setCreateObjectURL(URL.createObjectURL(i));
+    }
+  };
+
+  const handleUpload = async (e) => {
+    const body = new FormData();
+    body.append("file", uploadFile);
+    const response = await fetch("/api/upload", {
+      method: "POST",
+      body
+    });
+
+    console.log("upload file:", uploadFile);
+    console.log("upload file name:", uploadFile.name);
+
+    console.log({control});
+    const update = evidence.map(obj => {
+      if(obj.control == control){
+        obj.evidence.push(uploadFile.name);
+      }
+      return obj;
+    })
+    updateEvidence(update);
+    setUploadFile(null);
   }
 
   return (
@@ -66,34 +106,35 @@ export default function ProductListToolbar(props) {
           sx={{ m: 1 }}
           variant="h4"
         >
-          Products
+          Evidence
         </Typography>
-        <Box sx={{ m: 1 }}>
+        {!control || <Box sx={{ m: 1 }}>
+          <object src={createObjectURL}></object>
+          {!uploadFile || <Typography>{uploadFile.name}</Typography>}
           <Button
+          startIcon={(<AttachmentIcon fontSize="small" />)}
+            variant="contained"
+            component="label"
+            sx={{ mr: 1 }}            
+            >
+            Import
+          <input hidden type="file" name="myFile" onChange={handleImport}></input>
+          </Button>
+          <Button
+            variant="contained"
             startIcon={(<UploadIcon fontSize="small" />)}
             sx={{ mr: 1 }}
+            onClick={handleUpload}
           >
-            Import
+            Upload File
           </Button>
-          <Button
-            startIcon={(<DownloadIcon fontSize="small" />)}
-            sx={{ mr: 1 }}
-          >
-            Export
-          </Button>
-          <Button
-            color="primary"
-            variant="contained"
-          >
-            Add products
-          </Button>
-        </Box>
+        </Box>}
       </Box>
       <Box sx={{ mt: 3 }}>
         <Card>
           <CardContent>
             <Container>
-              <FormControl sx={{ minWidth: 180, pb: 3, pr: 2 }}>
+              <FormControl sx={{ minWidth: 180, pb:2 }}>
                 <InputLabel id="categoryLabel">Category</InputLabel>
                 <Select
                   labelId="Category"
@@ -107,6 +148,7 @@ export default function ProductListToolbar(props) {
                   ))}
                 </Select>
               </FormControl>
+              <br/>
 
               {!category ||
                 <FormControl sx={{ minWidth: 180 }}>

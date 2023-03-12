@@ -1,10 +1,8 @@
 import React from 'react'
-// import File from './pdf.worker.min.js';
-// import {Viewer, Worker} from '@react-pdf-viewer/core';
-// import {defaultLayoutPlugin} from '@react-pdf-viewer/default-layout';
 
-export default function Pdf() {
+export default function Pdf({file}) {
   return (
-    <iframe src="0701_07a1Organizational_12_1.pdf" frameborder="0"></iframe>
+    // <iframe src="/static/evidence/0701_07a1Organizational_12_2.pdf" frameborder="0"></iframe>
+    <iframe src={file} frameborder="0" width="90%" height="900px" zoom="1.50"></iframe>
   )
 }
