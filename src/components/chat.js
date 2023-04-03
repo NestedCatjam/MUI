@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import Talk from 'talkjs';
 import { useUser } from '@auth0/nextjs-auth0/client';
+import { Box } from "@mui/material";
 
 export default function Chat({ conversationID }) {
     const {user} = useUser();
@@ -20,5 +21,5 @@ export default function Chat({ conversationID }) {
         });
     }, [conversationID]);
 
-    return <div ><div id="evidenceChatBox"  ref={chatboxElement} /></div>;
+    return <Box id="evidenceChatBox"  height="500px" ref={chatboxElement} />;
 }
