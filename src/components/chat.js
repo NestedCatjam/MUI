@@ -8,8 +8,8 @@ export default function Chat({ conversationID }) {
     const chatboxElement = useRef();
     useEffect(() => {
         Talk.ready.then(() => {
-            const me = new Talk.User({name: user.nickname, email: user.email, photoUrl: user.picture});
-            const session = new Talk.Session({me});
+            const me = new Talk.User({id: user.sub, name: user.nickname, email: user.email, photoUrl: user.picture});
+            const session = new Talk.Session({appId: process.env.TALKJS_APP_ID, me});
             const conversation = session.getOrCreateConversation(conversationID);
             conversation.setParticipant(me);
 
@@ -20,5 +20,5 @@ export default function Chat({ conversationID }) {
         });
     }, []);
 
-    return <div ref={chatboxElement} />;
+    return <div id="evidenceChatBox" ref={chatboxElement} />;
 }

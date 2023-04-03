@@ -65,7 +65,7 @@ export default function Page() {
               size="small"
             />
           </Box>
-          {!file || <><Pdf file={file} /><Chat conversationID={file} /></>}
+          {!file || <><Chat conversationID={file} /><Pdf file={file} /></>}
         </Container>
       </Box>
     </>
