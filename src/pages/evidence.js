@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Container, Pagination, TableContainer, TableHead, Paper, Table, TableCell, TableBody, TableRow } from '@mui/material';
 import { controls } from '../__mocks__/controls';
 import ProductListToolbar from '../components/product/product-list-toolbar';
@@ -13,7 +13,7 @@ export default function Page() {
   const [currentControl, setCurrentControl] = useState('');
   const [evidence, setEvidence] = useState(null);
   const [file, setFile] = useState(null);
-
+  useEffect(() => console.log(file), [file]);
   return (
     <>
       <Head>

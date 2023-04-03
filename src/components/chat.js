@@ -18,7 +18,7 @@ export default function Chat({ conversationID }) {
             chatbox.mount(chatboxElement.current);
             return session.destroy;
         });
-    }, []);
+    }, [conversationID]);
 
-    return <div id="evidenceChatBox" ref={chatboxElement} />;
+    return <div ><div id="evidenceChatBox"  ref={chatboxElement} /></div>;
 }
