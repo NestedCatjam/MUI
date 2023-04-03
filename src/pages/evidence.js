@@ -6,6 +6,7 @@ import ProductListToolbar from '../components/product/product-list-toolbar';
 import ProductCard from '../components/product/product-card';
 import { DashboardLayout } from '../components/dashboard-layout';
 import Pdf from '../components/product/pdf';
+import Chat from '../components/chat';
 
 export default function Page() {
 
@@ -64,7 +65,7 @@ export default function Page() {
               size="small"
             />
           </Box>
-          {!file || <Pdf file={file} />}
+          {!file || <><Pdf file={file} /><Chat conversationID={file} /></>}
         </Container>
       </Box>
     </>

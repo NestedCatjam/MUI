@@ -41,6 +41,7 @@
     "react-dom": "18.2.0",
     "react-perfect-scrollbar": "1.5.8",
     "react-router-dom": "^6.8.2",
+    "talkjs": "^0.15.6",
     "uuid": "9.0.0",
     "yup": "0.32.11"
   },
