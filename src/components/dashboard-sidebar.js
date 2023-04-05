@@ -161,9 +161,10 @@ export const DashboardSidebar = (props) => {
             />
           ))}
         </Box>
-        <Divider sx={{ borderColor: '#2D3748' }} />
+        {/* <Divider sx={{ borderColor: '#2D3748' }} /> */}
         <Box
           sx={{
+            visibility: "hidden",
             px: 2,
             py: 3
           }}
