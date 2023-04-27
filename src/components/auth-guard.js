@@ -26,7 +26,7 @@ export const AuthGuard = (props) => {
       if (ignore.current) {
         return;
       }
-      
+
       ignore.current = !isLoading;
 
       if (isLoading) return;

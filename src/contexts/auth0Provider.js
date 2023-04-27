@@ -1,3 +1,4 @@
+//probably dead: david integration from earlier
 // src/auth/auth0-provider-with-history.js
 
 import React from 'react';
@@ -10,7 +11,7 @@ const Auth0ProviderWithHistory = ({ children }) => {
 
   const history = useHistory();
 
-  const onRedirectCallback = (appState) => { 
+  const onRedirectCallback = (appState) => {
     history.push(appState?.returnTo || window.location.pathname);
   };
 
