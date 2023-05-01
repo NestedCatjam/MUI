@@ -25,7 +25,7 @@ const Page = () => {
   }
   useEffect(() => {
     
-    fetch(`/api/users`, { method: 'GET' }).then(raw => raw.json()).then(rows => {
+    fetch(`/api/organizations`, { method: 'GET' }).then(raw => raw.json()).then(rows => {
         console.log(rows)
         setRows(rows);
     });
@@ -47,7 +47,7 @@ const Page = () => {
         <Container maxWidth={false}>
           <CustomerListToolbar onDelete={handleDelete} />
           <Box sx={{ mt: 3 }}>
-            <CustomerListResults customers={rows.map(x => ({...x, id: x.user_id, }))} selectedCustomerIds={selectedCustomerIds} setSelectedCustomerIds={setSelectedCustomerIds} />
+            <CustomerListResults customers={rows} selectedCustomerIds={selectedCustomerIds} setSelectedCustomerIds={setSelectedCustomerIds} />
           </Box>
         </Container>
       </Box>

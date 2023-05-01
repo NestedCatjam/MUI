@@ -80,10 +80,10 @@ export const CustomerListResults = ({ selectedCustomerIds, setSelectedCustomerId
                   />
                 </TableCell>
                 <TableCell>
-                  Name
+                  Display name
                 </TableCell>
                 <TableCell>
-                  Email
+                  Name
                 </TableCell>
                 <TableCell>
                   Role
@@ -122,12 +122,12 @@ export const CustomerListResults = ({ selectedCustomerIds, setSelectedCustomerId
                         color="textPrimary"
                         variant="body1"
                       >
-                        {customer.nickname}
+                        {customer.display_name}
                       </Typography>
                     </Box>
                   </TableCell>
                   <TableCell>
-                    {customer.email}
+                    {customer.name}
                   </TableCell>
                   
                 </TableRow>
