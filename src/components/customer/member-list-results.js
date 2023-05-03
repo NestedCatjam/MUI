@@ -16,9 +16,8 @@ import {
   Typography
 } from '@mui/material';
 import { getInitials } from '../../utils/get-initials';
-import Link from 'next/link';
 
-export const CustomerListResults = ({ selectedCustomerIds, setSelectedCustomerIds, customers, ...rest }) => {
+export const MemberListResults = ({ selectedCustomerIds, setSelectedCustomerIds, customers, ...rest }) => {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
 
@@ -81,10 +80,10 @@ export const CustomerListResults = ({ selectedCustomerIds, setSelectedCustomerId
                   />
                 </TableCell>
                 <TableCell>
-                  Display name
+                  Name
                 </TableCell>
                 <TableCell>
-                  Name
+                  Email
                 </TableCell>
                 <TableCell>
                   Role
@@ -106,7 +105,7 @@ export const CustomerListResults = ({ selectedCustomerIds, setSelectedCustomerId
                       value="true"
                     />
                   </TableCell>
-                  <TableCell><Link href={`/admin/${encodeURIComponent(customer.id)}`}>
+                  <TableCell>
                     <Box
                       sx={{
                         alignItems: 'center',
@@ -123,12 +122,12 @@ export const CustomerListResults = ({ selectedCustomerIds, setSelectedCustomerId
                         color="textPrimary"
                         variant="body1"
                       >
-                        {customer.display_name}
+                        {customer.name}
                       </Typography>
-                    </Box></Link>
+                    </Box>
                   </TableCell>
                   <TableCell>
-                    {customer.name}
+                    {customer.email}
                   </TableCell>
                   
                 </TableRow>
@@ -150,6 +149,6 @@ export const CustomerListResults = ({ selectedCustomerIds, setSelectedCustomerId
   );
 };
 
-CustomerListResults.propTypes = {
+MemberListResults.propTypes = {
   customers: PropTypes.array.isRequired
 };
