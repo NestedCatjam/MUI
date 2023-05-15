@@ -13,7 +13,7 @@ import {
 import { Download as DownloadIcon } from '../../icons/download';
 import { Upload as UploadIcon } from '../../icons/upload';
 import { getEvidence, updateEvidence } from '../../__mocks__/evidence';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AttachmentIcon from '@mui/icons-material/Attachment';
 
 
@@ -22,6 +22,14 @@ export default function ProductListToolbar(props) {
   const [category, setCategory] = useState('');
   const [controls, setControls] = useState('');
   const [control, setControl] = useState('');
+  const [organization, setOrganization] = useState('');
+
+  const [organizations, setOrganizations] = useState([]);
+
+  useEffect(() => {
+    fetch("/api/organizations").then(raw => raw.json()).then(organization => {console.log(organization); return organization}).then(organizations => setOrganizations(organizations))
+    
+  }, [])
 
   const [uploadFile, setUploadFile] = useState(null);
   const [createObjectURL, setCreateObjectURL] = useState(null);
@@ -50,7 +58,10 @@ export default function ProductListToolbar(props) {
       }
     });
   }
-
+  const handleOrganizationChange = e => {
+    setOrganization(e.target.value);
+    console.log(e.target.value);
+  }
   const handleControlChange = (e) => {
     setControl(e.target.value);
     props.setCurrentControl(e.target.value);
@@ -134,7 +145,14 @@ export default function ProductListToolbar(props) {
         <Card>
           <CardContent>
             <Container>
+              <FormControl sx={{minWidth: 180, pb: 2}}>
+              <InputLabel id="organizationLabel">Organization</InputLabel>
+                <Select labelId="Organization" id="organizations" label="Organization" value={organization} onChange={handleOrganizationChange}>
+                  {organizations ? organizations.map(organization => (<MenuItem value={organization.id}>{organization.display_name}</MenuItem>)): []}
+                </Select>
+              </FormControl>
               <FormControl sx={{ minWidth: 180, pb:2 }}>
+                
                 <InputLabel id="categoryLabel">Category</InputLabel>
                 <Select
                   labelId="Category"
