@@ -11,20 +11,21 @@ import { useRouter } from 'next/router';
 const Page = () => {
   const [rows, setRows] = useState([]);
   const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
+  const [organization, setOrganization] = useState(null);
   const router = useRouter();
   const { id } = router.query;
   const handleDelete = async () => {
-    // console.log('Deleting selected users');
-    // console.log(rows);
-    // console.log(selectedCustomerIds);
-    // for (const user of rows.filter(row => {console.log(row); return selectedCustomerIds.indexOf(row.user_id) >= 0;}) ) {
-    //   const result = await fetch(`/api/users/${encodeURIComponent(user.user_id)}`, {method: 'DELETE'});
-    //   if (result.ok) {
+    console.log('Deleting selected users');
+    console.log(rows);
+    console.log(selectedCustomerIds);
+    for (const user of rows.filter(row => {console.log(row); return selectedCustomerIds.indexOf(row.user_id) >= 0;}) ) {
+      const result = await fetch(`/api/organizations/${encodeURIComponent(id)}/members/${encodeURIComponent(user.user_id)}`, {method: 'DELETE'});
+      if (result.ok) {
 
-    //   } else {
-    //     alert('Delete failed');
-    //   }
-    // }
+      } else {
+        alert('Remove failed');
+      }
+    }
   }
   useEffect(() => {
     
@@ -33,6 +34,8 @@ const Page = () => {
         setRows(rows);
     });
   }, []);
+
+  useEffect(() => { fetch(`/api/organizations/${id}`).then(async raw => setOrganization(await raw.json())) }, []);
   return (
     <>
       <Head>
@@ -47,8 +50,8 @@ const Page = () => {
           py: 8
         }}
       >
-        <Container maxWidth={false}>
-          <CustomerListToolbar onDelete={handleDelete} />
+        <Container maxWidth={false} >
+          <CustomerListToolbar onDelete={handleDelete} pageTitle={organization ? `${organization.display_name} members administrator` : "Organization members"} />
           <Box sx={{ mt: 3 }}>
             <MemberListResults customers={rows.map(x => ({...x, id: x.user_id, }))} selectedCustomerIds={selectedCustomerIds} setSelectedCustomerIds={setSelectedCustomerIds} />
           </Box>

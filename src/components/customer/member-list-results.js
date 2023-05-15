@@ -129,7 +129,7 @@ export const MemberListResults = ({ selectedCustomerIds, setSelectedCustomerIds,
                   <TableCell>
                     {customer.email}
                   </TableCell>
-                  
+                  <TableCell>{customer && customer.roles && customer.roles.map && customer.roles.map(role => role.name)}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

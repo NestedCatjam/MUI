@@ -130,7 +130,7 @@ export const CustomerListResults = ({ selectedCustomerIds, setSelectedCustomerId
                   <TableCell>
                     {customer.name}
                   </TableCell>
-                  
+                  <TableCell>{customer.myRoles.map(role => role.name)}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

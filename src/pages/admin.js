@@ -45,7 +45,7 @@ const Page = () => {
         }}
       >
         <Container maxWidth={false}>
-          <CustomerListToolbar onDelete={handleDelete} />
+          <CustomerListToolbar onDelete={handleDelete} pageTitle="Administrator" />
           <Box sx={{ mt: 3 }}>
             <CustomerListResults customers={rows} selectedCustomerIds={selectedCustomerIds} setSelectedCustomerIds={setSelectedCustomerIds} />
           </Box>

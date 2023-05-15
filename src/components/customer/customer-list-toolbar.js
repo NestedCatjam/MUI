@@ -13,7 +13,7 @@ import { Download as DownloadIcon } from '../../icons/download';
 import NextLink from 'next/link';
 
 export const CustomerListToolbar = (props0) => {
-  const {onDelete, ...props} = props0;
+  const {onDelete, pageTitle, ...props} = props0;
   return <Box {...props}>
       <Box
         sx={{
@@ -28,7 +28,7 @@ export const CustomerListToolbar = (props0) => {
           sx={{ m: 1 }}
           variant="h4"
         >
-          Administrator
+          {pageTitle}
         </Typography>
         <Box sx={{ m: 1 }}>
           <Button sx={{ mr: 1 }} onClick={onDelete}>Delete</Button>
