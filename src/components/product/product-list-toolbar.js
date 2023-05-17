@@ -23,13 +23,20 @@ export default function ProductListToolbar(props) {
   const [controls, setControls] = useState('');
   const [control, setControl] = useState('');
   const [organization, setOrganization] = useState('');
+  const [nistControls, setNistControls] = useState([]);
+  const [nistControl, setNistControl] = useState('');
+
 
   const [organizations, setOrganizations] = useState([]);
 
   useEffect(() => {
-    fetch("/api/organizations").then(raw => raw.json()).then(organization => {console.log(organization); return organization}).then(organizations => setOrganizations(organizations))
-    
-  }, [])
+    fetch("/api/organizations").then(raw => raw.json()).then(organization => { console.log(organization); return organization }).then(organizations => setOrganizations(organizations))
+
+  }, []);
+
+  useEffect(() => {
+    fetch("/api/nist_controls").then(raw => {console.log(raw); return raw;}).then(raw => raw.json()).then(control => { console.log(control); return control; }).then(controls => setNistControls(controls));
+  }, []);
 
   const [uploadFile, setUploadFile] = useState(null);
   const [createObjectURL, setCreateObjectURL] = useState(null);
@@ -40,8 +47,8 @@ export default function ProductListToolbar(props) {
 
   const findEvidence = (title) => {
     console.log("findEvidence title:", title);
-    console.log({evidence});
-    const result = evidence.filter(row =>  row.control == title);
+    console.log({ evidence });
+    const result = evidence.filter(row => row.control == title);
     console.log("resulting evidence:", result, result[0].evidence);
     props.setEvidence(result[0].evidence);
   }
@@ -53,7 +60,7 @@ export default function ProductListToolbar(props) {
     props.setEvidence(null);
     setCategory(e.target.value)
     props.controls.forEach(listing => {
-      if(listing.category === e.target.value) {
+      if (listing.category === e.target.value) {
         setControls(listing.controlRequirement);
       }
     });
@@ -62,6 +69,12 @@ export default function ProductListToolbar(props) {
     setOrganization(e.target.value);
     console.log(e.target.value);
   }
+
+  const handleNistControlChange = e => {
+    setNistControl(e.target.value);
+    console.log(e.target.value);
+  };
+
   const handleControlChange = (e) => {
     setControl(e.target.value);
     props.setCurrentControl(e.target.value);
@@ -70,7 +83,7 @@ export default function ProductListToolbar(props) {
   }
 
   const handleImport = (e) => {
-    if(e.target.files && e.target.files[0]){
+    if (e.target.files && e.target.files[0]) {
       const i = e.target.files[0]
 
       console.log("uploadFile:", i);
@@ -90,9 +103,9 @@ export default function ProductListToolbar(props) {
     console.log("upload file:", uploadFile);
     console.log("upload file name:", uploadFile.name);
 
-    console.log({control});
+    console.log({ control });
     const update = evidence.map(obj => {
-      if(obj.control == control){
+      if (obj.control == control) {
         obj.evidence.push(uploadFile.name);
       }
       return obj;
@@ -123,13 +136,13 @@ export default function ProductListToolbar(props) {
           <object src={createObjectURL}></object>
           {!uploadFile || <Typography>{uploadFile.name}</Typography>}
           <Button
-          startIcon={(<AttachmentIcon fontSize="small" />)}
+            startIcon={(<AttachmentIcon fontSize="small" />)}
             variant="contained"
             component="label"
-            sx={{ mr: 1 }}            
-            >
+            sx={{ mr: 1 }}
+          >
             Import
-          <input hidden type="file" name="myFile" onChange={handleImport}></input>
+            <input hidden type="file" name="myFile" onChange={handleImport}></input>
           </Button>
           <Button
             variant="contained"
@@ -145,14 +158,20 @@ export default function ProductListToolbar(props) {
         <Card>
           <CardContent>
             <Container>
-              <FormControl sx={{minWidth: 180, pb: 2}}>
-              <InputLabel id="organizationLabel">Organization</InputLabel>
+              <FormControl sx={{ minWidth: 180, pb: 2 }}>
+                <InputLabel id="organizationLabel">Organization</InputLabel>
                 <Select labelId="Organization" id="organizations" label="Organization" value={organization} onChange={handleOrganizationChange}>
-                  {organizations ? organizations.map(organization => (<MenuItem value={organization.id}>{organization.display_name}</MenuItem>)): []}
+                  {organizations ? organizations.map(organization => (<MenuItem value={organization.id}>{organization.display_name}</MenuItem>)) : []}
                 </Select>
               </FormControl>
-              <FormControl sx={{ minWidth: 180, pb:2 }}>
-                
+              <FormControl sx={{ minWidth: 180, pb: 2 }}>
+                <InputLabel id="nistControlLabel">NIST control</InputLabel>
+                <Select labelId="NistControl" id="nistControls" label="NistControl" value={nistControl} onChange={handleNistControlChange}>
+                  {nistControls ? nistControls.map(nistControl => (<MenuItem value={nistControl.id}>{nistControl.controlCategory}:{nistControl.controlName}</MenuItem>)) : []}
+                </Select>
+              </FormControl>
+              <FormControl sx={{ minWidth: 180, pb: 2 }}>
+
                 <InputLabel id="categoryLabel">Category</InputLabel>
                 <Select
                   labelId="Category"
@@ -166,7 +185,7 @@ export default function ProductListToolbar(props) {
                   ))}
                 </Select>
               </FormControl>
-              <br/>
+              <br />
 
               {!category ||
                 <FormControl sx={{ minWidth: 180 }}>
