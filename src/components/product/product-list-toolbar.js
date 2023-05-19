@@ -25,7 +25,8 @@ export default function ProductListToolbar(props) {
   const [organization, setOrganization] = useState('');
   const [nistControls, setNistControls] = useState([]);
   const [nistControl, setNistControl] = useState('');
-
+  const [nistControlCategory, setNistControlCategory] = useState('');
+  const [nistControlCategories, setNistControlCategories] = useState([]);
 
   const [organizations, setOrganizations] = useState([]);
 
@@ -35,7 +36,11 @@ export default function ProductListToolbar(props) {
   }, []);
 
   useEffect(() => {
-    fetch("/api/nist_controls").then(raw => {console.log(raw); return raw;}).then(raw => raw.json()).then(control => { console.log(control); return control; }).then(controls => setNistControls(controls));
+    fetch("/api/nist_controls").then(raw => { console.log(raw); return raw; }).then(raw => raw.json()).then(control => { console.log(control); return control; }).then(controls => setNistControls(controls));
+  }, []);
+
+  useEffect(() => {
+    fetch("/api/categories").then(raw => raw.json()).then(categories => { console.log(categories); setNistControlCategories(categories); });
   }, []);
 
   const [uploadFile, setUploadFile] = useState(null);
@@ -52,6 +57,11 @@ export default function ProductListToolbar(props) {
     console.log("resulting evidence:", result, result[0].evidence);
     props.setEvidence(result[0].evidence);
   }
+
+  const handleNistControlCategoryChange = e => {
+    setNistControlCategory(e.target.value);
+    console.log(e.target.value);
+  };
 
   const handleCategoryChange = (e) => {
     setControls('');
@@ -162,6 +172,12 @@ export default function ProductListToolbar(props) {
                 <InputLabel id="organizationLabel">Organization</InputLabel>
                 <Select labelId="Organization" id="organizations" label="Organization" value={organization} onChange={handleOrganizationChange}>
                   {organizations ? organizations.map(organization => (<MenuItem value={organization.id}>{organization.display_name}</MenuItem>)) : []}
+                </Select>
+              </FormControl>
+              <FormControl sx={{ minWidth: 180, pb: 2 }}>
+                <InputLabel id="nistControlCategoryLabel">NIST control category</InputLabel>
+                <Select labelId="NistControlCategory" id="nistControlCategories" label="Nist control category" value={nistControlCategory} onChange={handleNistControlCategoryChange}>
+                  {nistControlCategories.map(nistControlCategory => (<MenuItem value={nistControlCategory}>{nistControlCategory}</MenuItem>))}
                 </Select>
               </FormControl>
               <FormControl sx={{ minWidth: 180, pb: 2 }}>
