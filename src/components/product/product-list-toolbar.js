@@ -36,7 +36,7 @@ export default function ProductListToolbar(props) {
 
   }, []);
 
-  
+
 
   useEffect(() => {
     fetch("/api/categories").then(raw => raw.json()).then(categories => { console.log(categories); setNistControlCategories(categories); });
@@ -55,7 +55,7 @@ export default function ProductListToolbar(props) {
     const result = evidence.filter(row => row.control == title);
     console.log("resulting evidence:", result, result[0].evidence);
     props.setEvidence(result[0].evidence);
-  }
+  };
 
   const handleNistControlCategoryChange = e => {
     setNistControlCategory(e.target.value);
@@ -83,15 +83,34 @@ export default function ProductListToolbar(props) {
         setControls(listing.controlRequirement);
       }
     });
-  }
+  };
+
   const handleOrganizationChange = e => {
     setOrganization(e.target.value);
     console.log(e.target.value);
-  }
+
+  };
 
   const handleNistControlChange = e => {
     setNistControl(e.target.value);
+    props.setCurrentControl(e.target.value);
     console.log(e.target.value);
+    const selectedNistControl = e.target.value;
+    setDropdownDisabled(true);
+    fetch(`/api/organizations/${organization}/controls/${selectedNistControl}/evidence`)
+    .then(async raw => {
+      console.log(await raw.text());
+      return raw;
+    })
+    .then(raw => raw.json())
+    .then(evidence => {
+      console.log("evidence: ", evidence);
+
+      props.setEvidence(evidence);
+    })
+
+
+
   };
 
   const handleControlChange = (e) => {
@@ -99,7 +118,7 @@ export default function ProductListToolbar(props) {
     props.setCurrentControl(e.target.value);
     console.log("setcurrentcontrol worked, or at least didn't break the program:", e.target.value);
     findEvidence(e.target.value);
-  }
+  };
 
   const handleImport = (e) => {
     if (e.target.files && e.target.files[0]) {
@@ -131,7 +150,7 @@ export default function ProductListToolbar(props) {
     })
     updateEvidence(update);
     setUploadFile(null);
-  }
+  };
 
   return (
     <Box {...props}>

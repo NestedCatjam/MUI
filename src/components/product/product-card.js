@@ -25,9 +25,10 @@ export default function ProductCard({ row, setFile }) {
 
   return (
     <TableRow>
-      <TableCell sx={{width:"25%", borderLeft:"1px solid black", borderBottom:"1px solid black", borderTop:"1px solid black"}}align="center" onClick={handleClick}><Button>{row}</Button></TableCell>
+      <TableCell sx={{width:"25%", borderLeft:"1px solid black", borderBottom:"1px solid black", borderTop:"1px solid black"}}align="center" onClick={handleClick}><Button>{row.name}</Button></TableCell>
       <TableCell sx={{width:"50%", borderBottom:"1px solid black", borderTop:"1px solid black"}}></TableCell>
-      <TableCell sx={{width:"25%", borderRight:"1px solid black", borderBottom:"1px solid black", borderTop:"1px solid black"}}align="center" onClick={() => download()}><Button>Download</Button></TableCell>
+{/*   <TableCell sx={{width:"25%", borderRight:"1px solid black", borderBottom:"1px solid black", borderTop:"1px solid black"}}align="center" onClick={() => download()}><Button>Download</Button></TableCell>
+    */}
     </TableRow>
   )
 };
