@@ -49,7 +49,35 @@ export default function ProductListToolbar(props) {
         setControls(listing.controlRequirement);
       }
     });
+<<<<<<< Updated upstream
   }
+=======
+  };
+
+  const handleOrganizationChange = e => {
+    setOrganization(e.target.value);
+    console.log(e.target.value);
+
+  };
+
+  const handleNistControlChange = e => {
+    setNistControl(e.target.value);
+    props.setCurrentControl(e.target.value);
+    console.log(e.target.value);
+    const selectedNistControl = e.target.value;
+    setDropdownDisabled(true);
+    fetch(`/api/organizations/${organization}/controls/${selectedNistControl}/evidence`)
+    .then(raw => raw.json())
+    .then(evidence => {
+      console.log("evidence: ", evidence);
+
+      props.setEvidence(evidence);
+    })
+
+
+
+  };
+>>>>>>> Stashed changes
 
   const handleControlChange = (e) => {
     setControl(e.target.value);
