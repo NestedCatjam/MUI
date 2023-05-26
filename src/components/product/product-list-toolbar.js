@@ -27,6 +27,7 @@ export default function ProductListToolbar(props) {
   const [nistControl, setNistControl] = useState('');
   const [nistControlCategory, setNistControlCategory] = useState('');
   const [nistControlCategories, setNistControlCategories] = useState([]);
+  const [dropdownDisabled, setDropdownDisabled] = useState(false);
 
   const [organizations, setOrganizations] = useState([]);
 
@@ -35,9 +36,7 @@ export default function ProductListToolbar(props) {
 
   }, []);
 
-  useEffect(() => {
-    fetch("/api/nist_controls").then(raw => { console.log(raw); return raw; }).then(raw => raw.json()).then(control => { console.log(control); return control; }).then(controls => setNistControls(controls));
-  }, []);
+  
 
   useEffect(() => {
     fetch("/api/categories").then(raw => raw.json()).then(categories => { console.log(categories); setNistControlCategories(categories); });
@@ -60,7 +59,17 @@ export default function ProductListToolbar(props) {
 
   const handleNistControlCategoryChange = e => {
     setNistControlCategory(e.target.value);
-    console.log(e.target.value);
+    setNistControls([]);
+    setNistControl('');
+    setDropdownDisabled(true);
+    fetch(`/api/categories/${encodeURIComponent(e.target.value)}`)
+    .then(raw => raw.json())
+    .then(nistControls => {console.log("NIST controls", nistControls); return nistControls; })
+    .then(nistControls => {
+      console.log(nistControls);
+      setNistControls(nistControls);
+      setDropdownDisabled(false);
+    });
   };
 
   const handleCategoryChange = (e) => {
@@ -174,18 +183,18 @@ export default function ProductListToolbar(props) {
                   {organizations ? organizations.map(organization => (<MenuItem value={organization.id}>{organization.display_name}</MenuItem>)) : []}
                 </Select>
               </FormControl>
-              <FormControl sx={{ minWidth: 180, pb: 2 }}>
+              <FormControl sx={{ minWidth: 180, pb: 2 }} disabled={dropdownDisabled}>
                 <InputLabel id="nistControlCategoryLabel">NIST control category</InputLabel>
                 <Select labelId="NistControlCategory" id="nistControlCategories" label="Nist control category" value={nistControlCategory} onChange={handleNistControlCategoryChange}>
-                  {nistControlCategories.map(nistControlCategory => (<MenuItem value={nistControlCategory}>{nistControlCategory}</MenuItem>))}
+                  {nistControlCategories && nistControlCategories.map ? nistControlCategories.map(nistControlCategory => (<MenuItem value={nistControlCategory}>{nistControlCategory}</MenuItem>)): <></>}
                 </Select>
               </FormControl>
-              <FormControl sx={{ minWidth: 180, pb: 2 }}>
+              {nistControlCategory ? <FormControl sx={{ minWidth: 180, pb: 2 }}>
                 <InputLabel id="nistControlLabel">NIST control</InputLabel>
                 <Select labelId="NistControl" id="nistControls" label="NistControl" value={nistControl} onChange={handleNistControlChange}>
-                  {nistControls ? nistControls.map(nistControl => (<MenuItem value={nistControl.id}>{nistControl.controlCategory}:{nistControl.controlName}</MenuItem>)) : []}
+                  {nistControls && nistControls.map ? [...new Set(nistControls.map(nistControl => { console.log(nistControl); return (<MenuItem value={nistControl.id}>{nistControl.controlName}: {nistControl.controlDescription}</MenuItem>)}))] : []}
                 </Select>
-              </FormControl>
+              </FormControl> : <></>}
               <FormControl sx={{ minWidth: 180, pb: 2 }}>
 
                 <InputLabel id="categoryLabel">Category</InputLabel>
