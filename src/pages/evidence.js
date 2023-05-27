@@ -13,7 +13,10 @@ export default function Page() {
   const [currentControl, setCurrentControl] = useState('');
   const [evidence, setEvidence] = useState(null);
   const [file, setFile] = useState(null);
+
   useEffect(() => console.log(file), [file]);
+  useEffect(() => console.log(evidence), [evidence]);
+
   return (
     <>
       <Head>
@@ -47,7 +50,7 @@ export default function Page() {
                   </TableHead>}
                 {(!evidence)
                   || (evidence.length == 0 && <TableBody><TableRow><TableCell align="center">No Evidence</TableCell></TableRow></TableBody>)
-                  || <TableBody>{evidence.map(row => (<ProductCard sx={{'&:last-child td, &:last-child th': {border: 0}}} row={row} setFile={setFile} />))}</TableBody>}
+                  || <TableBody>{evidence && evidence.map ? evidence.map(row => (<ProductCard sx={{'&:last-child td, &:last-child th': {border: 0}}} row={row} setFile={setFile} />)): []}</TableBody>}
               </Table>
             </TableContainer>
           </Box>

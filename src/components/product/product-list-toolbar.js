@@ -98,10 +98,6 @@ export default function ProductListToolbar(props) {
     const selectedNistControl = e.target.value;
     setDropdownDisabled(true);
     fetch(`/api/organizations/${organization}/controls/${selectedNistControl}/evidence`)
-    .then(async raw => {
-      console.log(await raw.text());
-      return raw;
-    })
     .then(raw => raw.json())
     .then(evidence => {
       console.log("evidence: ", evidence);
@@ -112,6 +108,7 @@ export default function ProductListToolbar(props) {
 
 
   };
+
 
   const handleControlChange = (e) => {
     setControl(e.target.value);
