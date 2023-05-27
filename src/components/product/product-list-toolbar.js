@@ -107,7 +107,7 @@ export default function ProductListToolbar(props) {
       console.log("evidence: ", evidence);
 
       props.setEvidence(evidence);
-    })
+    });
 
 
 
