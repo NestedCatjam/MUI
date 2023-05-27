@@ -98,11 +98,12 @@ export default function ProductListToolbar(props) {
     const selectedNistControl = e.target.value;
     setDropdownDisabled(true);
     fetch(`/api/organizations/${organization}/controls/${selectedNistControl}/evidence`)
-    .then(raw => raw.json())
+    .then(raw => {console.log(raw.status); return raw.json();})
     .then(evidence => {
       console.log("evidence: ", evidence);
 
       props.setEvidence(evidence);
+      setDropdownDisabled(false);
     });
 
 
@@ -167,7 +168,7 @@ export default function ProductListToolbar(props) {
         >
           Evidence
         </Typography>
-        {!control || <Box sx={{ m: 1 }}>
+        {!nistControl || <Box sx={{ m: 1 }}>
           <object src={createObjectURL}></object>
           {!uploadFile || <Typography>{uploadFile.name}</Typography>}
           <Button
@@ -199,12 +200,12 @@ export default function ProductListToolbar(props) {
                   {organizations ? organizations.map(organization => (<MenuItem value={organization.id}>{organization.display_name}</MenuItem>)) : []}
                 </Select>
               </FormControl>
-              <FormControl sx={{ minWidth: 180, pb: 2 }} disabled={dropdownDisabled}>
+              {organization ? <FormControl sx={{ minWidth: 180, pb: 2 }} disabled={dropdownDisabled}>
                 <InputLabel id="nistControlCategoryLabel">NIST control category</InputLabel>
                 <Select labelId="NistControlCategory" id="nistControlCategories" label="Nist control category" value={nistControlCategory} onChange={handleNistControlCategoryChange}>
                   {nistControlCategories && nistControlCategories.map ? nistControlCategories.map(nistControlCategory => (<MenuItem value={nistControlCategory}>{nistControlCategory}</MenuItem>)): <></>}
                 </Select>
-              </FormControl>
+              </FormControl> : <></>}
               {nistControlCategory ? <FormControl sx={{ minWidth: 180, pb: 2 }}>
                 <InputLabel id="nistControlLabel">NIST control</InputLabel>
                 <Select labelId="NistControl" id="nistControls" label="NistControl" value={nistControl} onChange={handleNistControlChange}>

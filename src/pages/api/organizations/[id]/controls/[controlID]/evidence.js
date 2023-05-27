@@ -11,5 +11,5 @@ export default withApiAuthRequired(async function users(req, res) {
     }
   });
 
-  res.status(response.status).send(response.text())
+  res.status(response.status).json(await response.json())
 })
