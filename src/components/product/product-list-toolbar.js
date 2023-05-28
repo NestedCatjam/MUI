@@ -131,9 +131,13 @@ export default function ProductListToolbar(props) {
   const handleUpload = async (e) => {
     const body = new FormData();
     body.append("file", uploadFile);
-    const response = await fetch("/api/upload", {
+    console.log("About to fetch");
+    const response = await fetch(`/api/organizations/${organization}/controls/${nistControl}/evidence`, {
       method: "POST",
-      body
+      body,
+      headers: {
+        "Content-Type": "multipart/form-data"
+      }
     });
 
     console.log("upload file:", uploadFile);
