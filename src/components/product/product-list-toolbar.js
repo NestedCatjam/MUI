@@ -135,9 +135,6 @@ export default function ProductListToolbar(props) {
     const response = await fetch(`/api/organizations/${organization}/controls/${nistControl}/evidence`, {
       method: "POST",
       body,
-      headers: {
-        "Content-Type": "multipart/form-data"
-      }
     });
 
     console.log("upload file:", uploadFile);

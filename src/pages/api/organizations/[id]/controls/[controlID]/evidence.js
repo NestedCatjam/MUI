@@ -1,20 +1,24 @@
 import { getAccessToken, withApiAuthRequired } from "@auth0/nextjs-auth0";
+import { IncomingForm } from "formidable";
 import { createReadStream } from 'fs';
+import FormData from "form-data";
 
 export default withApiAuthRequired(async function users(req, res) {
   const { accessToken } = await getAccessToken(req, res);
   const endpoint =
     `http://localhost:8080/organizations/${encodeURIComponent(req.query.id)}/nist_control/get/${encodeURIComponent(req.query.controlID)}/evidence`;
   if (req.method === 'POST') {
-    const file = req.files.file;
-    try {
-      const formData = new FormData();
 
-      formData.append('file', createReadStream(file.path));
+    try {
+
+
+
+
+
       const response = await fetch(endpoint, {
-        method: 'POST', body: formData, headers: {
+        method: 'POST', body: req.body, headers: {
           Authorization: `Bearer ${accessToken}`,
-          "Content-Type": "multipart/form-data"
+         "Content-Type": `multipart/form-data; boundary`
         }
       });
       if (response.ok) {
@@ -28,7 +32,7 @@ export default withApiAuthRequired(async function users(req, res) {
       console.error(error);
       res.status(500).send('An error occurred while uploading the file.');
     } finally {
-      file.stream.cancel();
+
     }
 
   } else {
