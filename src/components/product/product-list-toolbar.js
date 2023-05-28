@@ -131,12 +131,13 @@ export default function ProductListToolbar(props) {
   const handleUpload = async (e) => {
     const body = new FormData();
     body.append("file", uploadFile);
+    
     console.log("About to fetch");
     const response = await fetch(`/api/organizations/${organization}/controls/${nistControl}/evidence`, {
       method: "POST",
       body,
       headers: {
-        "Content-Type": "multipart/form-data"
+        "Content-Type": `multipart/form-data; boundary=${body._boundary}`
       }
     });
 

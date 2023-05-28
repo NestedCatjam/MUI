@@ -20,8 +20,10 @@ export default withApiAuthRequired(async function users(req, res) {
     req.query.controlID
   )}/evidence`;
 
+  
   if (req.method === "POST") {
     try {
+      console.log(endpoint);
       upload.single("file")(req, res, async (err) => {
         if (err) {
           console.error(err);
