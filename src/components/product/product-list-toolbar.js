@@ -130,27 +130,27 @@ export default function ProductListToolbar(props) {
 
   const handleUpload = async (e) => {
     const body = new FormData();
-    body.append("file", uploadFile);
+    console.log("File keys: ", Object.keys(uploadFile))
+    body.append("file", uploadFile, uploadFile.name);
     console.log("About to fetch");
-    const response = await fetch(`/api/organizations/${organization}/controls/${nistControl}/evidence`, {
-      method: "POST",
-      body,
-      headers: {
-        "Content-Type": "multipart/form-data"
-      }
-    });
-
     console.log("upload file:", uploadFile);
     console.log("upload file name:", uploadFile.name);
+    const response = await fetch(`/api/organizations/${organization}/controls/${nistControl}/evidence`, {
+      method: "POST",
+      body
+    });
+
+    console.log(response);
+   
 
     console.log({ control });
-    const update = evidence.map(obj => {
-      if (obj.control == control) {
-        obj.evidence.push(uploadFile.name);
-      }
-      return obj;
-    })
-    updateEvidence(update);
+    // const update = evidence.map(obj => {
+    //   if (obj.control == control) {
+    //     obj.evidence.push(uploadFile.name);
+    //   }
+    //   return obj;
+    // })
+    // updateEvidence(update);
     setUploadFile(null);
   };
 
@@ -175,6 +175,7 @@ export default function ProductListToolbar(props) {
         {!nistControl || <Box sx={{ m: 1 }}>
           <object src={createObjectURL}></object>
           {!uploadFile || <Typography>{uploadFile.name}</Typography>}
+          <form encType="multipart/form-data">
           <Button
             startIcon={(<AttachmentIcon fontSize="small" />)}
             variant="contained"
@@ -191,7 +192,7 @@ export default function ProductListToolbar(props) {
             onClick={handleUpload}
           >
             Upload File
-          </Button>
+          </Button></form>
         </Box>}
       </Box>
       <Box sx={{ mt: 3 }}>
