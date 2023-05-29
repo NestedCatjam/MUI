@@ -175,10 +175,14 @@ export default function ProductListToolbar(props) {
         {!nistControl || <Box sx={{ m: 1 }}>
           <object src={createObjectURL}></object>
           {!uploadFile || <Typography>{uploadFile.name}</Typography>}
-          <Button
+          <form action={`/api/organizations/${organization}/controls/${nistControl}/evidence`} method='post' encType='multipart/form-data'>
+            <input type='file' name='file'></input>
+            <Button variant="contained" startIcon={(<UploadIcon fontSize='small'/>)} sx={{mr: 1}} type='submit'>Upload</Button>
+          </form>
+          {/* <Button
             startIcon={(<AttachmentIcon fontSize="small" />)}
             variant="contained"
-            component="label"
+            component="button"
             sx={{ mr: 1 }}
           >
             Import
@@ -191,7 +195,7 @@ export default function ProductListToolbar(props) {
             onClick={handleUpload}
           >
             Upload File
-          </Button>
+          </Button> */}
         </Box>}
       </Box>
       <Box sx={{ mt: 3 }}>
