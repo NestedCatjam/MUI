@@ -68,7 +68,7 @@ export default function Page() {
               size="small"
             />
           </Box>
-          {!file || <><Chat conversationID={file.chatid} />{/*<Pdf file={file.file} />*/}</>}
+          {file && file.chatid ? <><Chat conversationID={file.chatid} />{/*<Pdf file={file.file} />*/}</>: <></>}
         </Container>
       </Box>
     </>
