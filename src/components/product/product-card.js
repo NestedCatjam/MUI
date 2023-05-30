@@ -19,8 +19,8 @@ export default function ProductCard({ row, setFile }) {
     }
 
     const handleClick = () => {
-      
-      setFile({chatid: row.chatid})
+      setFile(null);
+      setFile({chatid: row.chatid});
     }
 
   return (

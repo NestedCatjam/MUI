@@ -12,11 +12,16 @@ export default function Chat({ conversationID }) {
             const me = new Talk.User({id: user.sub, name: user.nickname, email: user.email, photoUrl: user.picture});
 
             const session = new Talk.Session({appId: process.env.NEXT_PUBLIC_TALKJS_APP_ID, me});
-            const conversation = session.getOrCreateConversation(conversationID);
-            conversation.setParticipant(me);
-
             const chatbox = session.createChatbox();
-            chatbox.select(conversation);
+            if (conversationID){ 
+                const conversation = session.getOrCreateConversation(conversationID);
+                conversation.setParticipant(me);
+
+            
+                chatbox.select(conversation);
+            } else {
+                
+            }
             chatbox.mount(chatboxElement.current);
             return session.destroy;
         });
