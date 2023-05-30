@@ -68,7 +68,7 @@ export default function Page() {
               size="small"
             />
           </Box>
-          {<><Chat conversationID={file && file.chatid ? file.chatid : null} />{/*<Pdf file={file.file} />*/}</> }
+          {<><Chat conversationID={file && file.chatid ? file.chatid : null} />{file && file.base64 && file.type ? <embed src={`data:${file.type};base64,${file.base64}`} />: <></>}{/*<Pdf file={file.file} />*/}</> }
         </Container>
       </Box>
     </>

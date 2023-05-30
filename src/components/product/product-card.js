@@ -20,7 +20,7 @@ export default function ProductCard({ row, setFile }) {
 
     const handleClick = () => {
       setFile(null);
-      setFile({chatid: row.chatid});
+      setFile(row);
     }
 
   return (
