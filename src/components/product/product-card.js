@@ -19,8 +19,8 @@ export default function ProductCard({ row, setFile }) {
     }
 
     const handleClick = () => {
-      let path = 'static/evidence/' + row;
-      setFile(path)
+      
+      setFile({chatid: row.chatid})
     }
 
   return (
