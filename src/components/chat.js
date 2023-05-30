@@ -10,7 +10,8 @@ export default function Chat({ conversationID }) {
     useEffect(() => {
         Talk.ready.then(() => {
             const me = new Talk.User({id: user.sub, name: user.nickname, email: user.email, photoUrl: user.picture});
-            const session = new Talk.Session({appId: process.env.TALKJS_APP_ID, me});
+
+            const session = new Talk.Session({appId: process.env.NEXT_PUBLIC_TALKJS_APP_ID, me});
             const conversation = session.getOrCreateConversation(conversationID);
             conversation.setParticipant(me);
 
