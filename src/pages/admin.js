@@ -24,11 +24,15 @@ const Page = () => {
     // }
   }
   useEffect(() => {
-    
-    fetch(`/api/organizations`, { method: 'GET' }).then(raw => raw.json()).then(rows => {
-        console.log(rows)
-        setRows(rows);
-    });
+    if (!rows || rows.length <= 0) {
+      fetch(`/api/organizations`, { method: 'GET' }).then(raw => raw.json()).then(organizations => {
+          console.log(organizations)
+          if (!rows || rows.length <= 0) {
+            setRows(organizations);
+          }
+          
+      });
+    }
   }, []);
   return (
     <>
