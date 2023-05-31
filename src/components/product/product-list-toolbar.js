@@ -22,12 +22,27 @@ export default function ProductListToolbar(props) {
   const [category, setCategory] = useState('');
   const [controls, setControls] = useState('');
   const [control, setControl] = useState('');
-  const [organization, setOrganization] = useState('');
+  const [organization, setOrganization1] = useState('');
+
+ 
+
   const [nistControls, setNistControls] = useState([]);
   const [nistControl, setNistControl] = useState('');
-  const [nistControlCategory, setNistControlCategory] = useState('');
+  const [nistControlCategory, setNistControlCategory1] = useState('');
   const [nistControlCategories, setNistControlCategories] = useState([]);
   const [dropdownDisabled, setDropdownDisabled] = useState(false);
+
+
+  const setNistControlCategory = value => {
+    setNistControlCategory1(value);
+    setNistControl('');
+  }
+
+  const setOrganization = value => {
+    setOrganization1(value);
+    setNistControlCategory('');
+  
+  };
 
   const [organizations, setOrganizations] = useState([]);
 
@@ -88,6 +103,7 @@ export default function ProductListToolbar(props) {
   const handleOrganizationChange = e => {
     setOrganization(e.target.value);
     console.log(e.target.value);
+    
 
   };
 
