@@ -14,14 +14,14 @@ const Page = () => {
     console.log('Deleting selected users');
     console.log(rows);
     console.log(selectedCustomerIds);
-    for (const user of rows.filter(row => {console.log(row); return selectedCustomerIds.indexOf(row.user_id) >= 0;}) ) {
-      const result = await fetch(`/api/users/${encodeURIComponent(user.user_id)}`, {method: 'DELETE'});
-      if (result.ok) {
+    // for (const user of rows.filter(row => {console.log(row); return selectedCustomerIds.indexOf(row.user_id) >= 0;}) ) {
+    //   const result = await fetch(`/api/users/${encodeURIComponent(user.user_id)}`, {method: 'DELETE'});
+    //   if (result.ok) {
 
-      } else {
-        alert('Delete failed');
-      }
-    }
+    //   } else {
+    //     alert('Delete failed');
+    //   }
+    // }
   }
   useEffect(() => {
     
@@ -45,7 +45,7 @@ const Page = () => {
         }}
       >
         <Container maxWidth={false}>
-          <CustomerListToolbar onDelete={handleDelete} pageTitle="Administrator" />
+          <CustomerListToolbar onDelete={handleDelete} rowType={"organization"} addRowLink={"/create-organization"} pageTitle="Administrator" />
           <Box sx={{ mt: 3 }}>
             <CustomerListResults customers={rows} selectedCustomerIds={selectedCustomerIds} setSelectedCustomerIds={setSelectedCustomerIds} />
           </Box>

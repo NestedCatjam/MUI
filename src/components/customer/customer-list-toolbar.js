@@ -12,8 +12,14 @@ import { Upload as UploadIcon } from '../../icons/upload';
 import { Download as DownloadIcon } from '../../icons/download';
 import NextLink from 'next/link';
 
-export const CustomerListToolbar = (props0) => {
+export const CustomerListToolbar = ({rowType, addRowLink, ...props0}) => {
   const {onDelete, pageTitle, ...props} = props0;
+  if (!rowType) {
+    rowType = "user";
+  }
+  if (!addRowLink) {
+    addRowLink = "/register";
+  }
   return <Box {...props}>
       <Box
         sx={{
@@ -44,12 +50,12 @@ export const CustomerListToolbar = (props0) => {
           >
             Export
           </Button>
-          <NextLink href="/register" passHref>
+          <NextLink href={addRowLink} passHref>
           <Button
             color="primary"
             variant="contained"
           >
-            Add user
+            Add {rowType}
           </Button>
           </NextLink>
         </Box>
