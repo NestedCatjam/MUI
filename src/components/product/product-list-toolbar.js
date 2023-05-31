@@ -46,11 +46,26 @@ export default function ProductListToolbar(props) {
 
   const [organizations, setOrganizations] = useState([]);
 
+
+  const isAuditor = () => {
+    if (organization) {
+
+    
+      const currentlySelectedOrganization = organization;
+      return organizations.find(organization => currentlySelectedOrganization == organization.id).myRoles.find(role => role.name === "auditor");
+    } else {
+      return false;
+    }
+  };
+
+  
+
   useEffect(() => {
     fetch("/api/organizations").then(raw => raw.json()).then(organization => { console.log(organization); return organization }).then(organizations => setOrganizations(organizations))
 
   }, []);
 
+  
 
 
   useEffect(() => {
@@ -188,7 +203,11 @@ export default function ProductListToolbar(props) {
         >
           Evidence
         </Typography>
-        {!nistControl || <Box sx={{ m: 1 }}>
+        
+        <Box sx={{ m: 1 }}>
+        
+        {!nistControl || 
+          <>
           <object src={createObjectURL}></object>
           {!uploadFile || <Typography>{uploadFile.name}</Typography>}
           <form action={`/api/organizations/${organization}/controls/${nistControl}/evidence`} method='post' encType='multipart/form-data'>
@@ -212,7 +231,8 @@ export default function ProductListToolbar(props) {
           >
             Upload File
           </Button> */}
-        </Box>}
+          
+        </>}{isAuditor() ? <Button variant='contained' sx={{mr: 1}} disabled={!nistControl}>Approve</Button> : <></>}</Box>
       </Box>
       <Box sx={{ mt: 3 }}>
         <Card>

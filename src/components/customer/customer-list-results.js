@@ -130,7 +130,9 @@ export const CustomerListResults = ({ selectedCustomerIds, setSelectedCustomerId
                   <TableCell>
                     {customer.name}
                   </TableCell>
-                  <TableCell>{customer.myRoles && customer.myRoles.map? customer.myRoles.map(role => role.name): []}</TableCell>
+                  <TableCell>
+                    {customer.myRoles && customer.myRoles.map && customer.myRoles.length > 0? (customer.myRoles.map(role => role.name).reduce((previousRoleName, currentRoleName) => previousRoleName + ", " + currentRoleName) || [] ): []}
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
