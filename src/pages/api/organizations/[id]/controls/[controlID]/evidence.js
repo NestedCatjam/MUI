@@ -9,7 +9,8 @@ export default withApiAuthRequired(async function users(req, res) {
   if (req.method === 'POST') {
     console.log(req.body)
     const response = await fetch(endpoint, {method: 'POST', body: req, headers: {Authorization: `Bearer ${accessToken}`, "Content-Type" : req.headers["content-type"]}});
-    res.status(response.status).send(await response.text());
+    res.redirect(302, "/evidence");
+    //res.status(response.status).send(await response.text());
   } else {
 
 

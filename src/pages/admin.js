@@ -10,6 +10,8 @@ const Page = () => {
   const [rows, setRows] = useState([]);
   const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
 
+  const [didRequest, setDidRequest] = useState(false);
+
   const handleDelete = async () => {
     console.log('Deleting selected users');
     console.log(rows);
@@ -24,7 +26,7 @@ const Page = () => {
     // }
   }
   useEffect(() => {
-    if (!rows || rows.length <= 0) {
+    if (!didRequest && (!rows || rows.length <= 0)) {
       fetch(`/api/organizations`, { method: 'GET' }).then(raw => raw.json()).then(organizations => {
           console.log(organizations)
           if (!rows || rows.length <= 0) {
@@ -32,6 +34,7 @@ const Page = () => {
           }
           
       });
+      setDidRequest(true);
     }
   }, []);
   return (
