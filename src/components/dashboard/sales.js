@@ -2,9 +2,46 @@ import { Bar } from 'react-chartjs-2';
 import { Box, Button, Card, CardContent, CardHeader, Divider, useTheme } from '@mui/material';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
+import React, { useState, useEffect } from 'react';
 
 export const Sales = (props) => {
   const theme = useTheme();
+
+  const [nistControls, setNistControls] = useState(0);
+  const [satisfiedNistControls, setSatisfiedNistControls] = useState(-1);
+  const [lastMonth, setLastMonth] = useState(0);
+
+  useEffect(() => {
+    console.log("fetching all NIST controls");
+    fetch("/api/nist_controls").then(raw => raw.json())
+    .then( output => { 
+      console.log(typeof(output) + " output:" + output);
+      let size = 0;
+      for(let key in output){
+        if(output.hasOwnProperty(key)){
+          size++;
+        }
+      };
+      setNistControls(size);
+      return output; })
+    .then(() => console.log("stored nistControls:", nistControls));
+  }, [nistControls]);
+
+  useEffect(() => {
+    console.log("fetching all satisfied NIST controls");
+    fetch("/api/satisfied_nist_controls").then(raw => raw.json())
+    .then( output => { 
+      console.log(output); 
+      let size = 0;
+      for(let key in output){
+        if(output.hasOwnProperty(key)){
+          size++;
+        }
+      };
+      setSatisfiedNistControls(size);
+      return output; })
+    .then(() => console.log("stored satisfied nistControls:", satisfiedNistControls));
+  }, []);
 
   const data = {
     datasets: [
@@ -27,8 +64,8 @@ export const Sales = (props) => {
         barThickness: 25,
         borderRadius: 4,
         categoryPercentage: 0.5,
-        data: [26, 5, 17, 99],
-        label: 'This month',
+        data: [lastMonth, 5, 17, 79],
+        label: 'Last month',
         //maxBarThickness is the width of the visible bar
         maxBarThickness: 20
       },
@@ -39,8 +76,8 @@ export const Sales = (props) => {
         borderRadius: 4,
         categoryPercentage: 0.5,
         // data: [18, 20, 17, 29, 30, 25, 13],
-        data: [46, 25, 47, 99],
-        label: 'Last month',
+        data: [({satisfiedNistControls}/{nistControls}), 25, 47, 99],
+        label: 'This month',
         maxBarThickness: 20
       },
       {
@@ -144,13 +181,13 @@ export const Sales = (props) => {
           p: 2
         }}
       >
-        <Button
+        {/* <Button
           color="primary"
           endIcon={<ArrowRightIcon fontSize="small" />}
           size="small"
         >
           Overview
-        </Button>
+        </Button> */}
       </Box>
     </Card>
   );

@@ -1,7 +1,45 @@
 import { Avatar, Box, Card, CardContent, Grid, LinearProgress, Typography } from '@mui/material';
 import InsertChartIcon from '@mui/icons-material/InsertChartOutlined';
+import React, { useState, useEffect } from 'react';
 
-export const TasksProgress = (props) => (
+export const TasksProgress = (props) => {
+
+  const [nistControls, setNistControls] = useState(0);
+  const [satisfiedNistControls, setSatisfiedNistControls] = useState(-1);
+
+  useEffect(() => {
+    console.log("fetching all NIST controls");
+    fetch("/api/nist_controls").then(raw => raw.json())
+    .then( output => { 
+      console.log(typeof(output) + " output:" + output);
+      let size = 0;
+      for(let key in output){
+        if(output.hasOwnProperty(key)){
+          size++;
+        }
+      };
+      setNistControls(size);
+      return output; })
+    .then(() => console.log("stored nistControls:", nistControls));
+  }, [nistControls]);
+
+  useEffect(() => {
+    console.log("fetching all satisfied NIST controls");
+    fetch("/api/satisfied_nist_controls").then(raw => raw.json())
+    .then( output => { 
+      console.log(output); 
+      let size = 0;
+      for(let key in output){
+        if(output.hasOwnProperty(key)){
+          size++;
+        }
+      };
+      setSatisfiedNistControls(size);
+      return output; })
+    .then(() => console.log("stored satisfied nistControls:", satisfiedNistControls));
+  }, []);
+
+  return(
   <Card
     sx={{ height: '100%' }}
     {...props}
@@ -18,14 +56,14 @@ export const TasksProgress = (props) => (
             gutterBottom
             variant="overline"
           >
-            PROGRESS THROUGH NIST
+            PROGRESS THROUGH NIST:
           </Typography>
-          <Typography
+          {props.nistControls !== -1 && satisfiedNistControls !== -1 && <Typography
             color="textPrimary"
             variant="h4"
           >
-            26.4%
-          </Typography>
+            {(100 * satisfiedNistControls / nistControls).toFixed(2)}%
+          </Typography>}
         </Grid>
         <Grid item>
           <Avatar
@@ -39,12 +77,13 @@ export const TasksProgress = (props) => (
           </Avatar>
         </Grid>
       </Grid>
-      <Box sx={{ pt: 3 }}>
+      {nistControls !== -1 && satisfiedNistControls !== -1 && <Box sx={{ pt: 3 }}>
         <LinearProgress
-          value={75.5}
+          value={(props.satisfiedNistControls / props.nistControls)}
           variant="determinate"
         />
-      </Box>
+      </Box>}
     </CardContent>
   </Card>
-);
+  )
+};
