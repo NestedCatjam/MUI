@@ -1,23 +1,63 @@
 import { Doughnut } from 'react-chartjs-2';
 import { Box, Card, CardContent, CardHeader, Divider, Typography, useTheme } from '@mui/material';
 import LaptopMacIcon from '@mui/icons-material/LaptopMac';
-import PhoneIcon from '@mui/icons-material/Phone';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import TabletIcon from '@mui/icons-material/Tablet';
+import React, { useState, useEffect } from 'react';
+import DisabledByDefaultIcon from '@mui/icons-material/DisabledByDefault';
 
 export const TrafficByDevice = (props) => {
   const theme = useTheme();
 
+  const [nistControls, setNistControls] = useState(0);
+  const [satisfiedNistControls, setSatisfiedNistControls] = useState(-1);
+
+  useEffect(() => {
+    console.log("fetching all NIST controls");
+    fetch("/api/nist_controls").then(raw => raw.json())
+    .then( output => { 
+      console.log(typeof(output) + " output:" + output);
+      let size = 0;
+      for(let key in output){
+        if(output.hasOwnProperty(key)){
+          size++;
+        }
+      };
+      setNistControls(size);
+      return output; })
+    .then(() => console.log("stored nistControls:", nistControls));
+  }, [nistControls]);
+
+  useEffect(() => {
+    console.log("fetching all satisfied NIST controls");
+    fetch("/api/satisfied_nist_controls").then(raw => raw.json())
+    .then( output => { 
+      console.log(output); 
+      let size = 0;
+      for(let key in output){
+        if(output.hasOwnProperty(key)){
+          size++;
+        }
+      };
+      setSatisfiedNistControls(size);
+      return output; })
+    .then(() => console.log("stored satisfied nistControls:", satisfiedNistControls));
+  }, []);
+
   const data = {
     datasets: [
       {
-        data: [26, 61, 13],
-        backgroundColor: ['#3F51B5', '#e53935', '#FB8C00'],
+        // data: [26, 61, 13],
+        // backgroundColor: ['#3F51B5', '#e53935', '#FB8C00'],
+        data: [(satisfiedNistControls / nistControls), 100-(satisfiedNistControls / nistControls)],
+        backgroundColor: ['#3F51B5', '#e53935'],
         borderWidth: 8,
         borderColor: '#FFFFFF',
         hoverBorderColor: '#FFFFFF'
       }
     ],
-    labels: ['Compliant', 'Non-compliant', 'Under Review']
+    // labels: ['Compliant', 'Non-compliant', 'Under Review']
+    labels: ['Compliant', 'Non-compliant']
   };
 
   const options = {
@@ -45,22 +85,24 @@ export const TrafficByDevice = (props) => {
   const devices = [
     {
       title: 'Compliant',
-      value: 26,
-      icon: LaptopMacIcon,
-      color: '#3F51B5'
+      value: (satisfiedNistControls / nistControls),
+      icon: CheckBoxIcon,
+      color: '#3F51B5',
+      iconColor: 'primary'
     },
     {
       title: 'Non-compliant',
-      value: 61,
-      icon: TabletIcon,
-      color: '#E53935'
+      value: 100-(satisfiedNistControls / nistControls),
+      icon: DisabledByDefaultIcon,
+      color: '#E53935',
+      iconColor: "error"
     },
-    {
-      title: 'Under Review',
-      value: 13,
-      icon: PhoneIcon,
-      color: '#FB8C00'
-    }
+    // {
+    //   title: 'Under Review',
+    //   value: 13,
+    //   icon: PhoneIcon,
+    //   color: '#FB8C00'
+    // }
   ];
 
   return (
@@ -90,7 +132,8 @@ export const TrafficByDevice = (props) => {
             color,
             icon: Icon,
             title,
-            value
+            value,
+            iconColor
           }) => (
             <Box
               key={title}
@@ -99,20 +142,20 @@ export const TrafficByDevice = (props) => {
                 textAlign: 'center'
               }}
             >
-              <Icon color="action" />
+              <Icon color={iconColor} />
               <Typography
                 color="textPrimary"
                 variant="body1"
               >
                 {title}
               </Typography>
-              <Typography
+              {nistControls !== -1 && satisfiedNistControls !== -1 && <Typography
                 style={{ color }}
                 variant="h4"
               >
                 {value}
                 %
-              </Typography>
+              </Typography>}
             </Box>
           ))}
         </Box>

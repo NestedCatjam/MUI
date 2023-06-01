@@ -47,6 +47,7 @@ export default function ProductListToolbar(props) {
   const [organizations, setOrganizations] = useState([]);
 
   useEffect(() => {
+    console.log("/api/organizations");
     fetch("/api/organizations").then(raw => raw.json()).then(organization => { console.log(organization); return organization }).then(organizations => setOrganizations(organizations))
 
   }, []);

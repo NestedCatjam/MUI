@@ -1,10 +1,11 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Talk from 'talkjs';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { Box } from "@mui/material";
 
 export default function Chat({ conversationID }) {
     const {user} = useUser();
+    // const {file} = file;
 
     const chatboxElement = useRef();
     useEffect(() => {
@@ -27,5 +28,9 @@ export default function Chat({ conversationID }) {
         });
     }, [conversationID]);
 
-    return <Box id="evidenceChatBox"  height="500px" ref={chatboxElement} />;
+    return (
+    <Box id="evidenceChatBox" sx={{display:'block', float:'right'}} height="700px" ref={chatboxElement} >
+      {/* {file && file.base64 && (file.type === 'application/pdf' || file.type === 'image/png' || file.type === 'image/jpeg') && 
+      <embed src={`data:${file.type};base64,${file.base64}`} />} */}
+    </Box>)
 }

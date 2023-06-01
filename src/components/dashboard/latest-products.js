@@ -49,57 +49,58 @@ const products = [
 ];
 
 export const LatestProducts = (props) => (
-  <Card {...props}>
-    <CardHeader
-      subtitle={`${products.length} in total`}
-      title="Latest Products"
-    />
-    <Divider />
-    <List>
-      {products.map((product, i) => (
-        <ListItem
-          divider={i < products.length - 1}
-          key={product.id}
-        >
-          <ListItemAvatar>
-            <img
-              alt={product.name}
-              src={product.imageUrl}
-              style={{
-                height: 48,
-                width: 48
-              }}
-            />
-          </ListItemAvatar>
-          <ListItemText
-            primary={product.name}
-            secondary={`Updated ${formatDistanceToNow(product.updatedAt)}`}
-          />
-          <IconButton
-            edge="end"
-            size="small"
-          >
-            <MoreVertIcon />
-          </IconButton>
-        </ListItem>
-      ))}
-    </List>
-    <Divider />
-    <Box
-      sx={{
-        display: 'flex',
-        justifyContent: 'flex-end',
-        p: 2
-      }}
-    >
-      <Button
-        color="primary"
-        endIcon={<ArrowRightIcon />}
-        size="small"
-        variant="text"
-      >
-        View all
-      </Button>
-    </Box>
-  </Card>
+  <></>
+  // <Card {...props}>
+  //   <CardHeader
+  //     subtitle={`${products.length} in total`}
+  //     title="Latest Products"
+  //   />
+  //   <Divider />
+  //   <List>
+  //     {products.map((product, i) => (
+  //       <ListItem
+  //         divider={i < products.length - 1}
+  //         key={product.id}
+  //       >
+  //         <ListItemAvatar>
+  //           <img
+  //             alt={product.name}
+  //             src={product.imageUrl}
+  //             style={{
+  //               height: 48,
+  //               width: 48
+  //             }}
+  //           />
+  //         </ListItemAvatar>
+  //         <ListItemText
+  //           primary={product.name}
+  //           secondary={`Updated ${formatDistanceToNow(product.updatedAt)}`}
+  //         />
+  //         <IconButton
+  //           edge="end"
+  //           size="small"
+  //         >
+  //           <MoreVertIcon />
+  //         </IconButton>
+  //       </ListItem>
+  //     ))}
+  //   </List>
+  //   <Divider />
+  //   <Box
+  //     sx={{
+  //       display: 'flex',
+  //       justifyContent: 'flex-end',
+  //       p: 2
+  //     }}
+  //   >
+  //     <Button
+  //       color="primary"
+  //       endIcon={<ArrowRightIcon />}
+  //       size="small"
+  //       variant="text"
+  //     >
+  //       View all
+  //     </Button>
+  //   </Box>
+  // </Card>
 );

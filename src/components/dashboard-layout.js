@@ -1,9 +1,10 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 import { Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { AuthGuard } from './auth-guard';
 import { DashboardNavbar } from './dashboard-navbar';
 import { DashboardSidebar } from './dashboard-sidebar';
+import React, { useState, useEffect } from 'react';
 
 const DashboardLayoutRoot = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -16,20 +17,22 @@ const DashboardLayoutRoot = styled('div')(({ theme }) => ({
 }));
 
 export const DashboardLayout = (props) => {
+
   const { children } = props;
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   
+  
   return (
     <AuthGuard>
-      <DashboardLayoutRoot >
-        <Box
-          sx={{
-            display: 'flex',
-            flex: '1 1 auto',
-            flexDirection: 'column',
-            width: '100%'
-          }}
-        >
+      <DashboardLayoutRoot>
+      <Box
+        sx={{
+          display: 'flex',
+          flex: '1 1 auto',
+          flexDirection: 'column',
+          width: '100%'
+        }}
+      >
           {children}
         </Box>
       </DashboardLayoutRoot>

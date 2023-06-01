@@ -108,7 +108,7 @@ const Page = () => (
 );
 
 Page.getLayout = (page) => (
-  <DashboardLayout>
+  <DashboardLayout page={page}>
     {page}
   </DashboardLayout>
 );
