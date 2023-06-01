@@ -10,11 +10,14 @@ export default withApiAuthRequired(async function users(req, res) {
       'Content-type': req.method !== 'GET' ? 'application/json; charset=UTF-8' : undefined,
     }
   });
-  
-  const members = await response.json();
-  for (const member of members) {
-    const roles = await fetch(`http://localhost:8080/organizations/${req.query.id}/members/${encodeURIComponent(member.user_id)}/roles`, {headers:{Authorization: `Bearer ${accessToken}`}});
-    member.roles = await roles.json();
+  if (req.method === "GET") {
+    const members = await response.json();
+    for (const member of members) {
+      const roles = await fetch(`http://localhost:8080/organizations/${req.query.id}/members/${encodeURIComponent(member.user_id)}/roles`, {headers:{Authorization: `Bearer ${accessToken}`}});
+      member.roles = await roles.json();
+    }
+    res.status(response.status).json(members);
+  } else {
+    res.status(response.status).send(await response.text());
   }
-  res.status(response.status).json(members);
 })

@@ -81,6 +81,7 @@ export const AccountPopover = (props) => {
         >
           {user.name}
         </Typography>
+        <Typography>UserID: {user.sub}</Typography>
       </Box>
       <MenuList
         disablePadding

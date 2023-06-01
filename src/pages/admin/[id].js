@@ -51,7 +51,7 @@ const Page = () => {
         }}
       >
         <Container maxWidth={false} >
-          <CustomerListToolbar onDelete={handleDelete} pageTitle={organization ? `${organization.display_name} members administrator` : "Organization members"} />
+          <CustomerListToolbar addRowLink={`/admin/${id}/add-member`} rowType={"member"} onDelete={handleDelete} pageTitle={organization ? `${organization.display_name} members administrator` : "Organization members"} />
           <Box sx={{ mt: 3 }}>
             <MemberListResults customers={rows.map(x => ({...x, id: x.user_id, }))} selectedCustomerIds={selectedCustomerIds} setSelectedCustomerIds={setSelectedCustomerIds} />
           </Box>
