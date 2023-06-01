@@ -24,7 +24,7 @@ export default function ProductListToolbar(props) {
   const [control, setControl] = useState('');
   const [organization, setOrganization1] = useState('');
 
- 
+
 
   const [nistControls, setNistControls] = useState([]);
   const [nistControl, setNistControl] = useState('');
@@ -41,7 +41,7 @@ export default function ProductListToolbar(props) {
   const setOrganization = value => {
     setOrganization1(value);
     setNistControlCategory('');
-  
+
   };
 
   const [organizations, setOrganizations] = useState([]);
@@ -50,7 +50,7 @@ export default function ProductListToolbar(props) {
   const isAuditor = () => {
     if (organization) {
 
-    
+
       const currentlySelectedOrganization = organization;
       return organizations.find(organization => currentlySelectedOrganization == organization.id).myRoles.find(role => role.name === "auditor");
     } else {
@@ -58,14 +58,14 @@ export default function ProductListToolbar(props) {
     }
   };
 
-  
+
 
   useEffect(() => {
     fetch("/api/organizations").then(raw => raw.json()).then(organization => { console.log(organization); return organization }).then(organizations => setOrganizations(organizations))
 
   }, []);
 
-  
+
 
 
   useEffect(() => {
@@ -93,13 +93,13 @@ export default function ProductListToolbar(props) {
     setNistControl('');
     setDropdownDisabled(true);
     fetch(`/api/categories/${encodeURIComponent(e.target.value)}`)
-    .then(raw => raw.json())
-    .then(nistControls => {console.log("NIST controls", nistControls); return nistControls; })
-    .then(nistControls => {
-      console.log(nistControls);
-      setNistControls(nistControls);
-      setDropdownDisabled(false);
-    });
+      .then(raw => raw.json())
+      .then(nistControls => { console.log("NIST controls", nistControls); return nistControls; })
+      .then(nistControls => {
+        console.log(nistControls);
+        setNistControls(nistControls);
+        setDropdownDisabled(false);
+      });
   };
 
   const handleCategoryChange = (e) => {
@@ -118,17 +118,19 @@ export default function ProductListToolbar(props) {
   const handleOrganizationChange = e => {
     setOrganization(e.target.value);
     console.log(e.target.value);
-    
+
 
   };
 
   const handleApproval = e => {
     if (confirm("Are you sure you want to approve requirement satisfaction for this control?")) {
-      fetch(`/api/organizations/${organization}/controls/${nistControl}/approve`, {method: "POST"}).then(response => {if (response.ok) {
-        nistControls.find(control => control.id === nistControl).isSatisfied = true;
-      }})
+      fetch(`/api/organizations/${organization}/controls/${nistControl}/approve`, { method: "POST" }).then(response => {
+        if (response.ok) {
+          setNistControls(nistControls.map(control => control.id === nistControl ? {...control, satisfied: true} : control));
+        }
+      })
     }
-    
+
   }
 
   const handleNistControlChange = e => {
@@ -138,13 +140,13 @@ export default function ProductListToolbar(props) {
     const selectedNistControl = e.target.value;
     setDropdownDisabled(true);
     fetch(`/api/organizations/${organization}/controls/${selectedNistControl}/evidence`)
-    .then(raw => {console.log(raw.status); return raw.json();})
-    .then(evidence => {
-      console.log("evidence: ", evidence);
+      .then(raw => { console.log(raw.status); return raw.json(); })
+      .then(evidence => {
+        console.log("evidence: ", evidence);
 
-      props.setEvidence(evidence);
-      setDropdownDisabled(false);
-    });
+        props.setEvidence(evidence);
+        setDropdownDisabled(false);
+      });
 
 
 
@@ -194,7 +196,13 @@ export default function ProductListToolbar(props) {
     setUploadFile(null);
   };
 
-const isApproved = () => nistControls.find(control => control.id === nistControl && control.isSatisfied) >= 0;
+  const isApproved = () => {
+    console.log("Currently-selected NIST control: ", nistControl);
+    console.log("NIST controls: ", nistControls)
+    const result = nistControls.findIndex(control => parseInt(control.id) == parseInt(nistControl) && control.satisfied) >= 0;
+    console.log("Approved: ", result);
+    return result;
+  }
 
   return (
     <Box {...props}>
@@ -214,18 +222,18 @@ const isApproved = () => nistControls.find(control => control.id === nistControl
         >
           Evidence
         </Typography>
-        
+
         <Box sx={{ m: 1 }}>
-        
-        {!nistControl || 
-          <>
-          <object src={createObjectURL}></object>
-          {!uploadFile || <Typography>{uploadFile.name}</Typography>}
-          <form action={`/api/organizations/${organization}/controls/${nistControl}/evidence`} method='post' encType='multipart/form-data'>
-            <input type='file' name='file'></input>
-            <Button variant="contained" startIcon={(<UploadIcon fontSize='small'/>)} sx={{mr: 1}} type='submit'>Upload</Button>
-          </form>
-          {/* <Button
+
+          {!nistControl ||
+            <>
+              <object src={createObjectURL}></object>
+              {!uploadFile || <Typography>{uploadFile.name}</Typography>}
+              <form action={`/api/organizations/${organization}/controls/${nistControl}/evidence`} method='post' encType='multipart/form-data'>
+                <input type='file' name='file'></input>
+                <Button variant="contained" startIcon={(<UploadIcon fontSize='small' />)} sx={{ mr: 1 }} type='submit'>Upload</Button>
+              </form>
+              {/* <Button
             startIcon={(<AttachmentIcon fontSize="small" />)}
             variant="contained"
             component="button"
@@ -242,8 +250,8 @@ const isApproved = () => nistControls.find(control => control.id === nistControl
           >
             Upload File
           </Button> */}
-          
-        </>}{isAuditor() ? <Button variant='contained' sx={{mr: 1}} disabled={!nistControl || isApproved() } onClick={handleApproval}>Approve{isApproved() ? 'd' : ''}</Button> : <></>}</Box>
+
+            </>}{isAuditor() ? <Button variant='contained' sx={{ mr: 1 }} disabled={!nistControl || isApproved()} onClick={handleApproval}>Approve{isApproved() ? 'd' : ''}</Button> : <></>}</Box>
       </Box>
       <Box sx={{ mt: 3 }}>
         <Card>
@@ -258,13 +266,13 @@ const isApproved = () => nistControls.find(control => control.id === nistControl
               {organization ? <FormControl sx={{ minWidth: 180, pb: 2 }} disabled={dropdownDisabled}>
                 <InputLabel id="nistControlCategoryLabel">NIST control category</InputLabel>
                 <Select labelId="NistControlCategory" id="nistControlCategories" label="Nist control category" value={nistControlCategory} onChange={handleNistControlCategoryChange}>
-                  {nistControlCategories && nistControlCategories.map ? nistControlCategories.map(nistControlCategory => (<MenuItem value={nistControlCategory}>{nistControlCategory}</MenuItem>)): <></>}
+                  {nistControlCategories && nistControlCategories.map ? nistControlCategories.map(nistControlCategory => (<MenuItem value={nistControlCategory}>{nistControlCategory}</MenuItem>)) : <></>}
                 </Select>
               </FormControl> : <></>}
               {nistControlCategory ? <FormControl sx={{ minWidth: 180, pb: 2 }}>
                 <InputLabel id="nistControlLabel">NIST control</InputLabel>
                 <Select labelId="NistControl" id="nistControls" label="NistControl" value={nistControl} onChange={handleNistControlChange}>
-                  {nistControls && nistControls.map ? [...new Set(nistControls.map(nistControl => { console.log(nistControl); return (<MenuItem value={nistControl.id}>{nistControl.controlName}: {nistControl.controlDescription}</MenuItem>)}))] : []}
+                  {nistControls && nistControls.map ? [...new Set(nistControls.map(nistControl => { console.log(nistControl); return (<MenuItem value={nistControl.id}>{nistControl.controlName}: {nistControl.controlDescription}</MenuItem>) }))] : []}
                 </Select>
               </FormControl> : <></>}
               <FormControl sx={{ minWidth: 180, pb: 2 }}>
