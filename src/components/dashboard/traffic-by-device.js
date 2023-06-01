@@ -49,7 +49,7 @@ export const TrafficByDevice = (props) => {
       {
         // data: [26, 61, 13],
         // backgroundColor: ['#3F51B5', '#e53935', '#FB8C00'],
-        data: [(satisfiedNistControls / nistControls), 100-(satisfiedNistControls / nistControls)],
+        data: [(satisfiedNistControls / nistControls).toFixed(2), 100-(satisfiedNistControls / nistControls).toFixed(2)],
         backgroundColor: ['#3F51B5', '#e53935'],
         borderWidth: 8,
         borderColor: '#FFFFFF',
@@ -85,14 +85,14 @@ export const TrafficByDevice = (props) => {
   const devices = [
     {
       title: 'Compliant',
-      value: (satisfiedNistControls / nistControls),
+      value: (100 * satisfiedNistControls / nistControls).toFixed(2),
       icon: CheckBoxIcon,
       color: '#3F51B5',
       iconColor: 'primary'
     },
     {
       title: 'Non-compliant',
-      value: 100-(satisfiedNistControls / nistControls),
+      value: 100-(100 * satisfiedNistControls / nistControls).toFixed(2),
       icon: DisabledByDefaultIcon,
       color: '#E53935',
       iconColor: "error"

@@ -62,7 +62,7 @@ export const TasksProgress = (props) => {
             color="textPrimary"
             variant="h4"
           >
-            {(satisfiedNistControls / nistControls)}%
+            {(100 * satisfiedNistControls / nistControls).toFixed(2)}%
           </Typography>}
         </Grid>
         <Grid item>

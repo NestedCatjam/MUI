@@ -95,7 +95,7 @@ export const Budget = (props) => {
             }}
             variant="body2"
           >
-            {(satisfiedNistControls / nistControls) - lastMonth}%
+            {(100*(satisfiedNistControls / nistControls) - lastMonth).toFixed(2)}%
           </Typography>}
           {satisfiedNistControls !== -1 && satisfiedNistControls !== -1 &&<Typography
             color="textSecondary"
