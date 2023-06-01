@@ -122,6 +122,15 @@ export default function ProductListToolbar(props) {
 
   };
 
+  const handleApproval = e => {
+    if (confirm("Are you sure you want to approve requirement satisfaction for this control?")) {
+      fetch(`/api/organizations/${organization}/controls/${nistControl}/approve`, {method: "POST"}).then(response => {if (response.ok) {
+        nistControls.find(control => control.id === nistControl).isSatisfied = true;
+      }})
+    }
+    
+  }
+
   const handleNistControlChange = e => {
     setNistControl(e.target.value);
     props.setCurrentControl(e.target.value);
@@ -185,6 +194,8 @@ export default function ProductListToolbar(props) {
     setUploadFile(null);
   };
 
+const isApproved = () => nistControls.find(control => control.id === nistControl && control.isSatisfied) >= 0;
+
   return (
     <Box {...props}>
 
@@ -232,7 +243,7 @@ export default function ProductListToolbar(props) {
             Upload File
           </Button> */}
           
-        </>}{isAuditor() ? <Button variant='contained' sx={{mr: 1}} disabled={!nistControl}>Approve</Button> : <></>}</Box>
+        </>}{isAuditor() ? <Button variant='contained' sx={{mr: 1}} disabled={!nistControl || isApproved() } onClick={handleApproval}>Approve{isApproved() ? 'd' : ''}</Button> : <></>}</Box>
       </Box>
       <Box sx={{ mt: 3 }}>
         <Card>
