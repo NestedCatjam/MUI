@@ -12,7 +12,8 @@ export default function Page() {
   const [currentControl, setCurrentControl] = useState('');
   const [evidence, setEvidence] = useState(null);
   const [file, setFile] = useState(null);
-  const [scrollHeight, setScrollHeight] = useState(document.documentElement.scrollableHeight);
+  // const [scrollHeight, setScrollHeight] = useState(document.documentElement.scrollableHeight);
+  const [scrollHeight, setScrollHeight] = useState(window.innerHeight);
 
   useEffect(() => console.log(file), [file]);
   useEffect(() => console.log(evidence), [evidence]);
@@ -21,7 +22,7 @@ export default function Page() {
     const observeScrollHeightChange = () => {
       const observer = new MutationObserver(() => {
         console.log('Scrollable Height:', document.documentElement.scrollHeight);
-        setScrollHeight(document.documentElement.scrollHeight - 20); 
+        // setScrollHeight(document.documentElement.scrollHeight - 20); 
       });
 
       observer.observe(document.documentElement, { childList: true, subtree: true });
@@ -100,11 +101,13 @@ export default function Page() {
               <embed 
               style={{
                 width: '75%',
-                height: '700px'
+                float: 'left',
+                height: scrollHeight * (3/4)
+                // '700px'
               }}
               src={`data:${file.type};base64,${file.base64}`} 
               />}
-            <Chat sx={{float: 'right'}}file={file} conversationID={file && file.chatid ? file.chatid : null}/>
+            <Chat sx={{float: 'right', width: '20%', height: scrollHeight * (3/4)}}file={file} conversationID={file && file.chatid ? file.chatid : null}/>
           </Box>
         </Container>
       </Box>

@@ -76,7 +76,7 @@ export const Sales = (props) => {
         borderRadius: 4,
         categoryPercentage: 0.5,
         // data: [18, 20, 17, 29, 30, 25, 13],
-        data: [({satisfiedNistControls}/{nistControls}), 25, 47, 99],
+        data: [100*(satisfiedNistControls/nistControls), 25, 47, 99],
         label: 'This month',
         maxBarThickness: 20
       },

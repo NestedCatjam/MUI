@@ -196,6 +196,7 @@ export default function ProductListToolbar(props) {
             <input type='file' name='file'></input>
             <Button variant="contained" startIcon={(<UploadIcon fontSize='small'/>)} sx={{mr: 1}} type='submit'>Upload</Button>
           </form>
+            <h6 style={{position: 'relative', float:'left'}}>supported types: PDF, PNG, JPEG</h6>
           {/* <Button
             startIcon={(<AttachmentIcon fontSize="small" />)}
             variant="contained"
@@ -237,7 +238,7 @@ export default function ProductListToolbar(props) {
                   {nistControls && nistControls.map ? [...new Set(nistControls.map(nistControl => { console.log(nistControl); return (<MenuItem value={nistControl.id}>{nistControl.controlName}: {nistControl.controlDescription}</MenuItem>)}))] : []}
                 </Select>
               </FormControl> : <></>}
-              <FormControl sx={{ minWidth: 180, pb: 2 }}>
+              {/* <FormControl sx={{ minWidth: 180, pb: 2 , display: 'none'}}>
 
                 <InputLabel id="categoryLabel">Category</InputLabel>
                 <Select
@@ -251,7 +252,7 @@ export default function ProductListToolbar(props) {
                     <MenuItem value={listing.category} key={listing.key}>{listing.category}</MenuItem>
                   ))}
                 </Select>
-              </FormControl>
+              </FormControl> */}
               <br />
 
               {!category ||

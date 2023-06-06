@@ -5,7 +5,7 @@ import { Box } from "@mui/material";
 
 export default function Chat({ conversationID }) {
     const {user} = useUser();
-    // const {file} = file;
+    const [height, setHeight] = useState(window.innerHeight);
 
     const chatboxElement = useRef();
     useEffect(() => {
@@ -29,7 +29,7 @@ export default function Chat({ conversationID }) {
     }, [conversationID]);
 
     return (
-    <Box id="evidenceChatBox" sx={{display:'block', float:'right'}} height="700px" ref={chatboxElement} >
+    <Box id="evidenceChatBox" sx={{display:'block', float:'right', width: "20%", height: height * (3/4)}} ref={chatboxElement} >
       {/* {file && file.base64 && (file.type === 'application/pdf' || file.type === 'image/png' || file.type === 'image/jpeg') && 
       <embed src={`data:${file.type};base64,${file.base64}`} />} */}
     </Box>)
