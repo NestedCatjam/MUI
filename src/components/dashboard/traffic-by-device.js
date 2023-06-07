@@ -49,14 +49,13 @@ export const TrafficByDevice = (props) => {
       {
         // data: [26, 61, 13],
         // backgroundColor: ['#3F51B5', '#e53935', '#FB8C00'],
-        data: [(satisfiedNistControls / nistControls).toFixed(2), 100-(satisfiedNistControls / nistControls).toFixed(2)],
+        data: [(100* satisfiedNistControls / nistControls).toFixed(2), 100-(100*satisfiedNistControls / nistControls).toFixed(2)],
         backgroundColor: ['#3F51B5', '#e53935'],
-        borderWidth: 8,
+        borderWidth: 2,
         borderColor: '#FFFFFF',
         hoverBorderColor: '#FFFFFF'
       }
     ],
-    // labels: ['Compliant', 'Non-compliant', 'Under Review']
     labels: ['Compliant', 'Non-compliant']
   };
 
@@ -85,7 +84,7 @@ export const TrafficByDevice = (props) => {
   const devices = [
     {
       title: 'Compliant',
-      value: (100 * satisfiedNistControls / nistControls).toFixed(2),
+      value: (100*satisfiedNistControls / nistControls).toFixed(2),
       icon: CheckBoxIcon,
       color: '#3F51B5',
       iconColor: 'primary'
@@ -96,13 +95,7 @@ export const TrafficByDevice = (props) => {
       icon: DisabledByDefaultIcon,
       color: '#E53935',
       iconColor: "error"
-    },
-    // {
-    //   title: 'Under Review',
-    //   value: 13,
-    //   icon: PhoneIcon,
-    //   color: '#FB8C00'
-    // }
+    }
   ];
 
   return (
