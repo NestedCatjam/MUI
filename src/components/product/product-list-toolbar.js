@@ -247,9 +247,7 @@ export default function ProductListToolbar(props) {
             onClick={handleUpload}
           >
             Upload File
-          </Button> */}
-
-            </>}{isAuditor() ? <Button variant='contained' sx={{ mr: 1 }} disabled={!nistControl || isApproved()} onClick={handleApproval}>Approve{isApproved() ? 'd' : ''}</Button> : <></>}</Box>
+          </Button> */}{isAuditor() ? <Button variant='contained' sx={{ mr: 1 }} disabled={!nistControl || isApproved()} onClick={handleApproval}>Approve{isApproved() ? 'd' : ''}</Button> : <></>}</Box>}
       </Box>
       <Box sx={{ mt: 3 }}>
         <Card>
